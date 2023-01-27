@@ -34,7 +34,7 @@ public class CancelEntityCommand extends WorldSubCommand {
             changeEntityEvents(player,worldName,value,entityType);
         }
     }
-    private static void sendMessage(Player player, String worldName, EntityType entityType, String value){
+    private void sendMessage(Player player, String worldName, EntityType entityType, String value){
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&6 cancel &f"+entityType.toString().toLowerCase()+"&6 events set to &f"+value));
     }
     private File getWorldFolder(String worldName){
@@ -43,19 +43,16 @@ public class CancelEntityCommand extends WorldSubCommand {
     private void changeEntityEvents(Player player, String worldName, String value, EntityType entityType){
         if (getWorldFolder(worldName).exists()){
             if (value.equalsIgnoreCase("true")){
-                WorldConfig.get().set(worldName+".cancel-entity."+entityType,true);
+                WorldConfig.get().set(worldName+".settings.cancel-entity."+entityType,true);
                 WorldConfig.save();
-                sendEntityMessage(player,worldName,entityType,value);
+                sendMessage(player,worldName,entityType,value);
             } else if (value.equalsIgnoreCase("false")) {
-                WorldConfig.get().set(worldName+".cancel-entity."+entityType,null);
+                WorldConfig.get().set(worldName+".settings.cancel-entity."+entityType,null);
                 WorldConfig.save();
-                sendEntityMessage(player,worldName,entityType,value);
+                sendMessage(player,worldName,entityType,value);
             }
         }else{
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&c does not exist"));
         }
-    }
-    private static void sendEntityMessage(Player player, String worldName, EntityType entityType, String value){
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&6 set "+entityType.toString().toLowerCase()+" to &f"+value));
     }
 }
