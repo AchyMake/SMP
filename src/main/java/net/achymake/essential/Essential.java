@@ -5,6 +5,7 @@ import net.achymake.essential.command.Commands;
 import net.achymake.essential.files.Files;
 import net.achymake.essential.listeners.Events;
 import net.achymake.essential.settings.EssPlaceholder;
+import net.achymake.essential.tablist.Tablist;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Essential extends JavaPlugin {
+    public static List<Integer> tasks = new ArrayList<>();
     public static List<Player> vanished = new ArrayList<>();
     public static Essential instance;
     @Override
@@ -26,10 +28,12 @@ public final class Essential extends JavaPlugin {
         Files.start();
         Events.start(this);
         Commands.start(this);
+        Tablist.start(this);
         sendMessage("&aEnabled &f"+this.getName()+ " " +this.getDescription().getVersion());
     }
     @Override
     public void onDisable(){
+        tasks.clear();
         vanished.clear();
         sendMessage("&cDisabled &f"+this.getName()+ " " +this.getDescription().getVersion());
     }

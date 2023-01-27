@@ -5,6 +5,7 @@ public class Files {
         KitConfig.setup();
         LocationConfig.setup();
         MotdConfig.setup();
+        TablistConfig.setup();
     }
     public static void reload(){
         Config.reload();
@@ -12,5 +13,6 @@ public class Files {
         LocationConfig.reload();
         MotdConfig.reload();
         PlayerConfig.reload();
+        TablistConfig.reload();
     }
 }
