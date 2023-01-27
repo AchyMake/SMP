@@ -40,10 +40,10 @@ public class LavaFlowCommand extends WorldSubCommand {
     private void changeLavaFlow(Player player,String worldName, String value){
         if (getWorldFolder(worldName).exists()){
             if (value.equalsIgnoreCase("true")){
-                WorldConfig.get().set(worldName+".lava-flow",true);
+                WorldConfig.get().set(worldName+".settings.lava-flow",true);
                 WorldConfig.save();
             } else if (value.equalsIgnoreCase("false")) {
-                WorldConfig.get().set(worldName+".lava-flow",false);
+                WorldConfig.get().set(worldName+".settings.lava-flow",false);
                 WorldConfig.save();
             }
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&6 set lava-flow to &f"+value));

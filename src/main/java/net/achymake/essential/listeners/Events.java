@@ -3,6 +3,7 @@ package net.achymake.essential.listeners;
 import net.achymake.essential.Essential;
 import net.achymake.essential.listeners.block.BlockBreakNotify;
 import net.achymake.essential.listeners.block.BlockPlaceNotify;
+import net.achymake.essential.listeners.block.LavaFlow;
 import net.achymake.essential.listeners.bucket.BucketEmptyNotify;
 import net.achymake.essential.listeners.chat.PlayerChat;
 import net.achymake.essential.listeners.chat.PlayerChatColor;
@@ -22,6 +23,7 @@ public class Events {
     public static void start(Essential plugin){
         new BlockBreakNotify(plugin);
         new BlockPlaceNotify(plugin);
+        new LavaFlow(plugin);
         new BucketEmptyNotify(plugin);
         new PlayerChat(plugin);
         new PlayerChatColor(plugin);
