@@ -15,5 +15,6 @@ public class Files {
         MotdConfig.reload();
         PlayerConfig.reload();
         TablistConfig.reload();
+        WorldConfig.reload();
     }
 }
