@@ -1,6 +1,5 @@
 package net.achymake.essential.command.fly;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,29 +16,19 @@ public class FlyCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             Player player = (Player) sender;
             if (args.length == 0){
-                if (player.getAllowFlight()){
-                    player.setAllowFlight(false);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &cdisabled"));
-                }else{
-                    player.setAllowFlight(true);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &aenabled"));
-                }
+                toggleFly(player);
             } else if (args.length == 1) {
                 if (player.hasPermission("essential.fly.others")){
-                    Player target = Bukkit.getPlayer(args[0]);
+                    Player target = player.getServer().getPlayerExact(args[0]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
                     }else{
-                        if (target.hasPermission("essential.fly.exempt")){
+                        if (target == player){
+                            toggleFly(player);
+                        }else if (target.hasPermission("essential.fly.exempt")){
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to toggle fly for &f"+target.getName()));
                         }else{
-                            if (target.getAllowFlight()){
-                                target.setAllowFlight(false);
-                                target.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &cdisabled"));
-                            }else{
-                                target.setAllowFlight(true);
-                                target.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &aenabled"));
-                            }
+                            toggleFly(player);
                         }
                     }
                 }
@@ -52,12 +41,21 @@ public class FlyCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
             if (sender.hasPermission("essential.fly.others")){
-                for (Player players : Bukkit.getOnlinePlayers()){
+                for (Player players : sender.getServer().getOnlinePlayers()){
                     commands.add(players.getName());
                 }
                 return commands;
             }
         }
         return commands;
+    }
+    private void toggleFly(Player player){
+        if (player.getAllowFlight()){
+            player.setAllowFlight(false);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &cdisabled"));
+        }else{
+            player.setAllowFlight(true);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Fly mode &aenabled"));
+        }
     }
 }

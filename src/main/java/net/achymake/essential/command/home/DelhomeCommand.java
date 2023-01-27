@@ -20,20 +20,14 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
-            Player player = (Player) sender;
             if (args.length == 1){
-                if (PlayerConfig.get(player).getKeys(true).contains("homes."+args[0])){
-                    File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-                    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                    config.set("homes."+args[0],null);
-                    try {
-                        config.save(file);
-                    } catch (IOException e) {
-                        Essential.instance.sendMessage(e.getMessage());
-                    }
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+args[0]+"&6 deleted"));
+                Player player = (Player) sender;
+                String home = args[0];
+                if (PlayerConfig.get(player).getKeys(true).contains("homes."+home)){
+                    deleteHome(player,home);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+home+"&6 deleted"));
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c does not exist"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',home+"&c does not exist"));
                 }
             }
         }
@@ -52,5 +46,15 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
             }
         }
         return commands;
+    }
+    private void deleteHome(Player player, String home){
+        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("homes."+home,null);
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            Essential.instance.sendMessage(e.getMessage());
+        }
     }
 }

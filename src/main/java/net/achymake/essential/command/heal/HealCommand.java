@@ -1,7 +1,6 @@
 package net.achymake.essential.command.heal;
 
 import net.achymake.essential.files.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,8 +18,8 @@ public class HealCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
-            Player player = (Player) sender;
             if (args.length == 0){
+                Player player = (Player) sender;
                 if (player.hasPermission("essential.cooldown.exempt")){
                     player.setHealth(player.getMaxHealth());
                     player.setFoodLevel(20);
@@ -32,7 +31,7 @@ public class HealCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Your health has been satisfied"));
                 }else{
                     Long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
-                    String cooldownTimer = Config.get().getString("cooldown.heal");
+                    String cooldownTimer = Config.get().getString("commands.cooldown.heal");
                     Integer integer = Integer.valueOf(cooldownTimer.replace(cooldownTimer, cooldownTimer + "000"));
                     if (timeElapsed > integer){
                         cooldown.put(player.getUniqueId(),System.currentTimeMillis());
@@ -45,10 +44,11 @@ public class HealCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             } else if (args.length == 1) {
+                Player player = (Player) sender;
                 if (player.hasPermission("essential.heal.others")){
-                    Player target = Bukkit.getServer().getPlayerExact(args[0]);
+                    Player target = player.getServer().getPlayerExact(args[0]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
                     }else{
                         target.setHealth(target.getMaxHealth());
                         target.setFoodLevel(20);
@@ -64,7 +64,7 @@ public class HealCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            for (Player players : Bukkit.getOnlinePlayers()){
+            for (Player players : sender.getServer().getOnlinePlayers()){
                 commands.add(players.getName());
             }
             return commands;

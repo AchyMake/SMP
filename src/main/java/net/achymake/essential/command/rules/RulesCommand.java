@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,16 +14,13 @@ import java.util.List;
 public class RulesCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player){
-            if (args.length == 0){
-                Player player = (Player) sender;
-                if (MotdConfig.get().getKeys(false).contains("rules")){
-                    for (String motd : MotdConfig.get().getStringList("rules")){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(motd,sender.getName())));
-                    }
-                }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&c'&fmotd.yml&c' does not contain &frules"));
+        if (args.length == 0){
+            if (MotdConfig.get().getKeys(false).contains("rules")){
+                for (String motd : MotdConfig.get().getStringList("rules")){
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(motd,sender.getName())));
                 }
+            }else{
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&c'&fmotd.yml&c' does not contain &frules"));
             }
         }
         return true;

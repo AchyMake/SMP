@@ -34,7 +34,7 @@ public class RepairCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You repaired &f"+player.getInventory().getItemInMainHand().getType().toString().toLowerCase()));
                     }else{
                         Long timeElapsed = System.currentTimeMillis() - cooldown.get(player.getUniqueId());
-                        String cooldownTimer = Config.get().getString("cooldown.repair");
+                        String cooldownTimer = Config.get().getString("commands.cooldown.repair");
                         Integer integer = Integer.valueOf(cooldownTimer.replace(cooldownTimer, cooldownTimer + "000"));
                         if (timeElapsed > integer){
                             cooldown.put(player.getUniqueId(),System.currentTimeMillis());

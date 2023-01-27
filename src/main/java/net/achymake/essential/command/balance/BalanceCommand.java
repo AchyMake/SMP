@@ -22,11 +22,11 @@ public class BalanceCommand implements CommandExecutor, TabCompleter {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Balance: &a"+ Economy.getFormat(Economy.getEconomy(player))));
         } else if (args.length == 1) {
             if (player.hasPermission("essential.balance.others")){
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+                OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
                 if (PlayerConfig.exist(offlinePlayer)){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+" &6balance: &a"+ Economy.getFormat(Economy.getEconomy(offlinePlayer))));
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c has never joined"));
                 }
             }
         }

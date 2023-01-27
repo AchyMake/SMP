@@ -1,6 +1,5 @@
 package net.achymake.essential.command.gamemode;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -19,18 +18,18 @@ public class GMACommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (args.length == 0){
                 player.setGameMode(GameMode.ADVENTURE);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Changed game mode to&f Adventure"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Changed game mode to&f adventure"));
             }else{
                 if (player.hasPermission("essential.gamemode.others")){
-                    Player target = Bukkit.getPlayerExact(args[0]);
+                    Player target = player.getServer().getPlayerExact(args[0]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
                     }else if (target.hasPermission("essential.gamemode.exempt")){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to change gamemode of &f"+target.getName()));
                     }else{
                         target.setGameMode(GameMode.ADVENTURE);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You changed &f"+target.getName()+"&6 game mode to&f Adventure"));
-                        target.sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 changed your game mode to&f Adventure"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You changed &f"+target.getName()+"&6 game mode to&f adventure"));
+                        target.sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 changed your game mode to&f adventure"));
                     }
                 }
             }
@@ -42,7 +41,7 @@ public class GMACommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         if (sender.hasPermission("essential.gamemode.others")){
             if (args.length == 1){
-                for (Player players : Bukkit.getOnlinePlayers()){
+                for (Player players : sender.getServer().getOnlinePlayers()){
                     commands.add(players.getName());
                 }
                 return commands;

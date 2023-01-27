@@ -1,9 +1,6 @@
 package net.achymake.essential.command.ban;
 
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,30 +16,23 @@ public class BanCommand implements CommandExecutor, TabCompleter {
         if (args.length == 0) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cusage:&f /ban name reason"));
         } else if (args.length == 1) {
-            Player target = Bukkit.getPlayerExact(args[0]);
-            if (target.hasPermission("essential.ban.exempt")) {
-                player.kickPlayer(ChatColor.translateAlternateColorCodes('&', target.getName() + "&6 has the reverse card!"));
-            } else {
-                player.getServer().getBanList(BanList.Type.NAME).addBan(target.getName(),ChatColor.translateAlternateColorCodes('&',player.getName() + "&c banned you with no reasons"),null,null);
-                Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.translateAlternateColorCodes('&', player.getName() + "&c banned you with no reasons"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou banned &f" + args[0] + "&c with no reasons"));
-            }
+            BanList banList = player.getServer().getBanList(BanList.Type.NAME);
+            OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+            banList.addBan(offlinePlayer.getName(),ChatColor.translateAlternateColorCodes('&', "&cno reasons"),null,null);
+            banList.getBanEntry(offlinePlayer.getName()).save();
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou banned &f"+offlinePlayer.getName()+"&c with no reasons"));
         } else if (args.length > 2) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (String words : args){
-                stringBuilder.append(words);
+            for (int i = 1; i < args.length; i++){
+                stringBuilder.append(args[i]);
                 stringBuilder.append(" ");
             }
-            Player target = Bukkit.getPlayerExact(args[0]);
-            if (target.hasPermission("essential.ban.exempt")) {
-                player.kickPlayer(ChatColor.translateAlternateColorCodes('&', target.getName() + "&6 has the reverse card!"));
-            } else {
-                player.getServer().getBanList(BanList.Type.NAME).addBan(target.getName(),ChatColor.translateAlternateColorCodes('&',"&6Banned by &f" + player.getName() + "&6 reason:&f " + stringBuilder),null,null);
-                Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.translateAlternateColorCodes('&', "&6Banned by &f" + player.getName() + "&6 reason:&f " + stringBuilder));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6You banned &f" + args[0] + "&6 with reason &f" + stringBuilder));
-            }
+            BanList banList = player.getServer().getBanList(BanList.Type.NAME);
+            OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+            banList.addBan(offlinePlayer.getName(),ChatColor.translateAlternateColorCodes('&', stringBuilder.toString()),null,null);
+            banList.getBanEntry(offlinePlayer.getName()).save();
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou banned &f"+offlinePlayer.getName()+"&c for &f"+stringBuilder));
         }
-
         return true;
     }
     @Override

@@ -1,7 +1,8 @@
 package net.achymake.essential.command.vanish;
 
+import net.achymake.essential.files.PlayerConfig;
 import net.achymake.essential.settings.VanishSettings;
-import org.bukkit.Bukkit;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +22,11 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                 VanishSettings.toggleVanish(player);
             }else if (args.length == 1){
                 OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
-                VanishSettings.toggleVanishOffline(offlinePlayer);
+                if (PlayerConfig.exist(offlinePlayer)){
+                    VanishSettings.toggleVanishOffline(offlinePlayer);
+                }else{
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
+                }
             }
         }
         return true;
@@ -30,7 +35,7 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            for (Player players : Bukkit.getOnlinePlayers()){
+            for (Player players : sender.getServer().getOnlinePlayers()){
                 commands.add(players.getName());
             }
             return commands;

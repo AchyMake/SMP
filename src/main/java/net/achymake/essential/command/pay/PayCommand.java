@@ -1,5 +1,6 @@
 package net.achymake.essential.command.pay;
 
+import net.achymake.essential.files.PlayerConfig;
 import net.achymake.essential.settings.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,18 +25,22 @@ public class PayCommand implements CommandExecutor, TabCompleter {
             }else if (args.length == 1){
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage: &f/pay player amount"));
             }else if (args.length == 2) {
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                if (Integer.parseInt(args[1]) <= Economy.getEconomy(player)){
-                    Economy.addEconomy(target, Double.parseDouble(args[1]));
-                    Economy.removeEconomy(player, Double.valueOf(args[1]));
-                    if (target.isOnline()){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+target.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
-                        Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+                if (PlayerConfig.exist(offlinePlayer)){
+                    if (Integer.parseInt(args[1]) <= Economy.getEconomy(player)){
+                        Economy.addEconomy(offlinePlayer, Double.parseDouble(args[1]));
+                        Economy.removeEconomy(player, Double.valueOf(args[1]));
+                        if (offlinePlayer.isOnline()){
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                            Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                        }else{
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                        }
                     }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+target.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have enough"));
                     }
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have enough"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
                 }
             }
         }

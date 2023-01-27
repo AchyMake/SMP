@@ -1,6 +1,5 @@
 package net.achymake.essential.command.inventory;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,7 +37,7 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            for (Player players : Bukkit.getOnlinePlayers()){
+            for (Player players : sender.getServer().getOnlinePlayers()){
                 commands.add(players.getName());
             }
             return commands;

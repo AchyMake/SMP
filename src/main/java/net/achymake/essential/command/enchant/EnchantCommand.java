@@ -15,30 +15,33 @@ import java.util.List;
 public class EnchantCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
-        if (args.length == 0){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage:&f /enchant enchantment level"));
-        }else if (args.length == 1){
-            if (player.getInventory().getItemInMainHand().getType().equals(Material.AIR)){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have to hold an item"));
-            }else{
-                if (player.getInventory().getItemInMainHand().containsEnchantment(Enchantment.getByName(args[0].toUpperCase()))){
-                    player.getInventory().getItemInMainHand().removeEnchantment(Enchantment.getByName(args[0].toUpperCase()));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You removed &f"+args[0]));
+        if (sender instanceof Player){
+            if (args.length == 0){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage:&f /enchant enchantment level"));
+            }else if (args.length == 1){
+                Player player = (Player) sender;
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.AIR)){
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have to hold an item"));
                 }else{
-                    player.getInventory().getItemInMainHand().addEnchantment(Enchantment.getByName(args[0]),1);
+                    if (player.getInventory().getItemInMainHand().containsEnchantment(Enchantment.getByName(args[0].toUpperCase()))){
+                        player.getInventory().getItemInMainHand().removeEnchantment(Enchantment.getByName(args[0].toUpperCase()));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You removed &f"+args[0]));
+                    }else{
+                        player.getInventory().getItemInMainHand().addEnchantment(Enchantment.getByName(args[0]),1);
+                    }
                 }
-            }
-        }else if (args.length == 2){
-            if (player.getInventory().getItemInMainHand().getType().equals(Material.AIR)){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have to hold an item"));
-            }else{
-                if (Integer.valueOf(args[1]) > 0){
-                    player.getInventory().getItemInMainHand().addUnsafeEnchantment(Enchantment.getByName(args[0].toUpperCase()),Integer.valueOf(args[1]));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You enchanted item with &f"+Enchantment.getByName(args[0].toUpperCase()).getName().toLowerCase()+"&6 lvl &f"+args[1]));
+            }else if (args.length == 2){
+                Player player = (Player) sender;
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.AIR)){
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have to hold an item"));
                 }else{
-                    player.getInventory().getItemInMainHand().removeEnchantment(Enchantment.getByName(args[0].toUpperCase()));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You removed &f"+args[0]));
+                    if (Integer.valueOf(args[1]) > 0){
+                        player.getInventory().getItemInMainHand().addUnsafeEnchantment(Enchantment.getByName(args[0].toUpperCase()),Integer.valueOf(args[1]));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You enchanted item with &f"+Enchantment.getByName(args[0].toUpperCase()).getName().toLowerCase()+"&6 lvl &f"+args[1]));
+                    }else{
+                        player.getInventory().getItemInMainHand().removeEnchantment(Enchantment.getByName(args[0].toUpperCase()));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You removed &f"+args[0]));
+                    }
                 }
             }
         }

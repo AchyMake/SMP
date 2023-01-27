@@ -1,7 +1,6 @@
 package net.achymake.essential.command.mute;
 
 import net.achymake.essential.settings.PlayerSettings;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +15,7 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1){
-            Player target = Bukkit.getPlayer(args[0]);
+            Player target = sender.getServer().getPlayer(args[0]);
             if (target == null){
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
             }else{
@@ -47,7 +46,7 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            for (Player players : Bukkit.getOnlinePlayers()){
+            for (Player players : sender.getServer().getOnlinePlayers()){
                 commands.add(players.getName());
             }
             return commands;

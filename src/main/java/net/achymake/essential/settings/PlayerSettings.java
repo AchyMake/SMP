@@ -55,12 +55,12 @@ public class PlayerSettings {
         return PlayerConfig.get(player).getKeys(false).contains("last-location");
     }
     public static Location getLastLocation(Player player){
-        World world = player.getServer().getWorld(PlayerConfig.get(player).getString(player.getUniqueId()+".last-location.world"));
-        double x = PlayerConfig.get(player).getDouble(player.getUniqueId()+".last-location.x");
-        double y = PlayerConfig.get(player).getDouble(player.getUniqueId()+".last-location.x");
-        double z = PlayerConfig.get(player).getDouble(player.getUniqueId()+".last-location.x");
-        float yaw = PlayerConfig.get(player).getLong(player.getUniqueId()+".last-location.yaw");
-        float pitch = PlayerConfig.get(player).getLong(player.getUniqueId()+".last-location.pitch");
+        World world = player.getServer().getWorld(PlayerConfig.get(player).getString("last-location.world"));
+        double x = PlayerConfig.get(player).getDouble("last-location.x");
+        double y = PlayerConfig.get(player).getDouble("last-location.y");
+        double z = PlayerConfig.get(player).getDouble("last-location.z");
+        float yaw = PlayerConfig.get(player).getLong("last-location.yaw");
+        float pitch = PlayerConfig.get(player).getLong("last-location.pitch");
         return new Location(world,x,y,z,yaw,pitch);
     }
     public static void setLastLocation(Player player){
@@ -97,31 +97,6 @@ public class PlayerSettings {
     }
     public static boolean hasPVP(Player player){
         return PlayerConfig.get(player).getBoolean("pvp");
-    }
-    public static void togglePVP(Player player){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (config.getBoolean("pvp")){
-            config.set("pvp",false);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
-        }else{
-            config.set("pvp",true);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
-        }
-    }
-    public static boolean isBanned(OfflinePlayer offlinePlayer){
-        return PlayerConfig.get(offlinePlayer).getBoolean("banned");
-    }
-    public static String getBannedReason(OfflinePlayer offlinePlayer){
-        return PlayerConfig.get(offlinePlayer).getString("banned-reason");
     }
     public static boolean isFrozen(Player player){
         return PlayerConfig.get(player).getBoolean("frozen");
@@ -169,36 +144,5 @@ public class PlayerSettings {
     }
     public static boolean isJailed(Player player){
         return PlayerConfig.get(player).getBoolean("jailed");
-    }
-    public static void toggleJail(Player player){
-        Location location = player.getLocation();
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (config.getBoolean("jailed")){
-            Location back = new Location(Bukkit.getWorld(config.getString("jail.world")),config.getDouble("jail.x"),config.getDouble("jail.y"),config.getDouble("jail.z"),config.getLong("jail.yaw"),config.getLong("jail.pitch"));
-            player.teleport(back);
-            config.set("jailed",false);
-            config.set("jail",null);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
-        }else{
-            Location jail = new Location(Bukkit.getWorld(LocationConfig.get().getString("jail.world")),LocationConfig.get().getDouble("jail.x"),LocationConfig.get().getDouble("jail.y"),LocationConfig.get().getDouble("jail.z"),LocationConfig.get().getLong("jail.yaw"),LocationConfig.get().getLong("jail.pitch"));
-            player.teleport(jail);
-            config.set("jailed",true);
-            config.set("jail.world",location.getWorld().getName());
-            config.set("jail.x",location.getX());
-            config.set("jail.y",location.getY());
-            config.set("jail.z",location.getZ());
-            config.set("jail.yaw",location.getYaw());
-            config.set("jail.pitch",location.getPitch());
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
-        }
     }
 }

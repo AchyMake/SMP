@@ -1,6 +1,5 @@
 package net.achymake.essential.command.announcement;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,8 +19,8 @@ public class AnnouncementCommand implements CommandExecutor, TabCompleter {
                 stringBuilder.append(words);
                 stringBuilder.append(" ");
             }
-            for (Player players : Bukkit.getOnlinePlayers()){
-                players.sendMessage(ChatColor.translateAlternateColorCodes('&',stringBuilder.toString()));
+            for (Player players : sender.getServer().getOnlinePlayers()){
+                players.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6[&eServer&6]&r "+stringBuilder));
             }
         }
         return true;

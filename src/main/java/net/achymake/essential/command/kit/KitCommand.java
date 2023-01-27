@@ -21,13 +21,14 @@ public class KitCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
-            Player player = (Player) sender;
             if (args.length == 0){
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Kits:"));
+                Player player = (Player) sender;
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Kits:"));
                 for (String kitNames : KitConfig.get().getKeys(false)){
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6- &f"+kitNames));
                 }
             }else if (args.length == 1){
+                Player player = (Player) sender;
                 if (player.hasPermission("essential.kit."+args[0].toLowerCase())){
                     for (String kitNames : KitConfig.get().getKeys(false)){
                         if (args[0].equals(kitNames)){
