@@ -11,6 +11,8 @@ economy:
   currency: $
   format: '#,##0.00'
   starting-balance: 0.0
+chat:
+  format: '%prefix% %player% %suffix%&f: %message%'
 homes:
   default: 1
   cost: 1250.0

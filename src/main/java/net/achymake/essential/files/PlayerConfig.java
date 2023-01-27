@@ -35,6 +35,8 @@ public class PlayerConfig {
             config.set("muted",false);
             config.set("jailed",false);
             config.set("new",true);
+            config.set("prefix","");
+            config.set("suffix","");
             config.options().copyDefaults(true);
             try {
                 config.save(configFile);

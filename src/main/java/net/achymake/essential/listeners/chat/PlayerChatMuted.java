@@ -16,7 +16,7 @@ public class PlayerChatMuted implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerLoginSetup (AsyncPlayerChatEvent event){
+    public void onPlayerChatMuted (AsyncPlayerChatEvent event){
         if (!PlayerSettings.isMuted(event.getPlayer()))return;
         event.setCancelled(true);
         if (event.isCancelled()){

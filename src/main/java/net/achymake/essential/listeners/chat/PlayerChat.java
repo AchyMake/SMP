@@ -15,17 +15,16 @@ public class PlayerChat implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerLoginSetup (AsyncPlayerChatEvent event){
-        event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + event.getPlayer().getName() + suffix(event.getPlayer())+"&r: ")+event.getMessage());
+    public void onPlayerChatFormat (AsyncPlayerChatEvent event){
+        event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: ")+event.getMessage());
     }
     private String prefix(Player player) {
-        String prefix = "%luckperms_prefix%";
-        prefix = PlaceholderAPI.setPlaceholders(player, prefix);
-        return prefix;
+        return PlaceholderAPI.setPlaceholders(player, "%essential_prefix%");
+    }
+    private String name(Player player) {
+        return PlaceholderAPI.setPlaceholders(player, "%essential_name%");
     }
     private String suffix(Player player) {
-        String prefix = "%luckperms_suffix%";
-        prefix = PlaceholderAPI.setPlaceholders(player, prefix);
-        return prefix;
+        return PlaceholderAPI.setPlaceholders(player, "%essential_suffix%");
     }
 }

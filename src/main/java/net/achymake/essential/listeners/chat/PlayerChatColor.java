@@ -13,7 +13,7 @@ public class PlayerChatColor implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChat (AsyncPlayerChatEvent event){
+    public void onPlayerChatColor (AsyncPlayerChatEvent event){
         if (!event.getPlayer().hasPermission("essential.chatcolor"))return;
         event.setMessage(ChatColor.translateAlternateColorCodes('&',event.getMessage()));
     }

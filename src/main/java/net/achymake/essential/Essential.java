@@ -4,6 +4,7 @@ import net.achymake.essential.api.VaultSetup;
 import net.achymake.essential.command.Commands;
 import net.achymake.essential.files.Files;
 import net.achymake.essential.listeners.Events;
+import net.achymake.essential.settings.EssPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ public final class Essential extends JavaPlugin {
     public static Essential instance;
     @Override
     public void onEnable(){
+        new EssPlaceholder().register();
         VaultSetup.setup(this);
         getConfig().options().copyDefaults(true);
         saveConfig();
