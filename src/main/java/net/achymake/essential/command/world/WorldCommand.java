@@ -77,7 +77,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 }
                 return commands;
             }else if (args[0].equalsIgnoreCase("lava-flow")) {
-                commands.add(String.valueOf(WorldConfig.get().getBoolean(args[1]+".lava-flow")));
+                commands.add(String.valueOf(WorldConfig.get().getBoolean(args[1]+".settings.lava-flow")));
                 return commands;
             }else if (args[0].equalsIgnoreCase("cancel-entity")) {
                 for (EntityType entityType : EntityType.values()){
