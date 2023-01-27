@@ -1,4 +1,4 @@
-package net.achymake.essential.listeners.entity;
+package net.achymake.essential.listeners.player;
 
 import net.achymake.essential.Essential;
 import net.achymake.essential.files.PlayerConfig;
