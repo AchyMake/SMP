@@ -6,6 +6,7 @@ public class Files {
         LocationConfig.setup();
         MotdConfig.setup();
         TablistConfig.setup();
+        WorldConfig.setup();
     }
     public static void reload(){
         Config.reload();

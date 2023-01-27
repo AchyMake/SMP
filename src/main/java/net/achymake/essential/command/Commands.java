@@ -55,6 +55,7 @@ import net.achymake.essential.command.warp.SetwarpCommand;
 import net.achymake.essential.command.warp.WarpCommand;
 import net.achymake.essential.command.whisper.WhisperCommand;
 import net.achymake.essential.command.workbench.WorkbenchCommand;
+import net.achymake.essential.command.world.WorldCommand;
 
 public class Commands {
     public static void start(Essential plugin){
@@ -116,5 +117,6 @@ public class Commands {
         plugin.getCommand("warp").setExecutor(new WarpCommand());
         plugin.getCommand("whisper").setExecutor(new WhisperCommand());
         plugin.getCommand("workbench").setExecutor(new WorkbenchCommand());
+        plugin.getCommand("world").setExecutor(new WorldCommand());
     }
 }
