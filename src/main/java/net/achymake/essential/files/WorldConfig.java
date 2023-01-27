@@ -22,6 +22,8 @@ public class WorldConfig {
                         get().addDefault(world.getName()+".environment",world.getEnvironment().toString());
                         get().addDefault(world.getName()+".seed",world.getSeed());
                         get().addDefault(world.getName()+".settings.lava-flow",true);
+                        get().addDefault(world.getName()+".settings.physical.farmland-break",false);
+                        get().addDefault(world.getName()+".settings.physical.turtle-egg-break",false);
                     }
                     get().options().copyDefaults(true);
                     save();

@@ -42,9 +42,11 @@ public class CreateCommand extends WorldSubCommand {
     }
     private void worldCreation(String worldName, World.Environment environment){
         WorldCreator worldCreator = new WorldCreator(worldName);
-        WorldConfig.get().set(worldName + ".lava-flow",true);
         WorldConfig.get().set(worldName + ".environment",environment.toString());
         WorldConfig.get().set(worldName + ".seed",worldCreator.seed());
+        WorldConfig.get().set(worldName + ".settings.lava-flow",true);
+        WorldConfig.get().set(worldName + ".settings.physical.farmland-break",false);
+        WorldConfig.get().set(worldName + ".settings.physical.turtle-egg-break",false);
         worldCreator.environment(environment);
         worldCreator.createWorld();
         WorldConfig.save();

@@ -34,11 +34,11 @@ public class CancelSpawnCommand extends WorldSubCommand {
             File world = new File(Bukkit.getWorldContainer().getAbsoluteFile(), worldName);
             if (world.exists()){
                 if (value.equalsIgnoreCase("true")){
-                    WorldConfig.get().set(worldName+".cancel-spawn."+entityType,true);
+                    WorldConfig.get().set(worldName+".settings.cancel-spawn."+entityType,true);
                     WorldConfig.save();
                     sendMessage(player,worldName,entityType,value);
                 } else if (value.equalsIgnoreCase("false")) {
-                    WorldConfig.get().set(worldName+".cancel-spawn."+entityType,null);
+                    WorldConfig.get().set(worldName+".settings.cancel-spawn."+entityType,null);
                     WorldConfig.save();
                     sendMessage(player,worldName,entityType,value);
                 }
@@ -48,6 +48,6 @@ public class CancelSpawnCommand extends WorldSubCommand {
         }
     }
     private static void sendMessage(Player player, String worldName, EntityType entityType, String value){
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&6 cancel &f"+entityType.toString().toLowerCase()+"&6 spawning set to &f"+value));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', worldName+"&6 cancel &f"+entityType.toString().toLowerCase()+"&6 spawning to &f"+value));
     }
 }
