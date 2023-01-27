@@ -1,0 +1,39 @@
+notify-update:
+  # Notifies Plugin Update
+  enable: true
+join-message:
+  # if false and using 'essential.join-message'
+  # this will send the message to the server
+  enable: true
+  join: '&f{0}&e joined the server'
+  quit: '&f{0}&e left the server'
+economy:
+  currency: $
+  format: '#,##0.00'
+  starting-balance: 0.0
+homes:
+  default: 1
+  cost: 1250.0
+commands:
+  cooldown:
+    # Cooldown in seconds
+    feed: 120
+    heal: 120
+    repair: 3600
+    rtp: 3600
+  rtp:
+    world: world
+    spread: 500
+    safe-materials:
+      - GRASS_BLOCK
+      - PODZOL
+      - GRASS
+      - SNOW
+      - STONE
+  disable:
+    - /tell
+    - /me
+    - /plugins
+    - /about
+    - /version
+    - /icanhasbukkit

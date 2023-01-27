@@ -1,0 +1,413 @@
+name: Essential
+version: '${project.version}'
+main: net.achymake.essential.Essential
+api-version: 1.13
+prefix: Essential
+load: STARTUP
+softdepend: [ Vault ]
+depend: [ PlaceholderAPI ]
+authors: [ AchyMake ]
+description: essentials stuff
+website: https://www.spigotmc.org/resources/authors/achy.589038/
+permissions:
+  essential.announcement:
+    description: message
+    default: op
+  essential.anvil:
+    description: message
+    default: op
+  essential.back:
+    description: message
+    default: op
+  essential.balance:
+    description: message
+    default: op
+  essential.balance.others:
+    description: message
+    default: op
+  essential.ban:
+    description: message
+    default: op
+  essential.ban.exempt:
+    description: message
+    default: op
+  essential.chatcolor:
+    description: message
+    default: op
+  essential.eco:
+    description: message
+    default: op
+  essential.enchant:
+    description: message
+    default: op
+  essential.enderchest:
+    description: message
+    default: op
+  essential.enderchest.others:
+    description: message
+    default: op
+  essential.enderchest.exempt:
+    description: message
+    default: op
+  essential.feed:
+    description: message
+    default: op
+  essential.feed.others:
+    description: message
+    default: op
+  essential.feed.exempt:
+    description: message
+    default: op
+  essential.fly:
+    description: message
+    default: op
+  essential.fly.others:
+    description: message
+    default: op
+  essential.fly.exempt:
+    description: message
+    default: op
+  essential.freeze:
+    description: message
+    default: op
+  essential.freeze.exempt:
+    description: message
+    default: op
+  essential.gamemode:
+    description: message
+    default: op
+    children:
+      - essential.gamemode.adventure
+      - essential.gamemode.creative
+      - essential.gamemode.survival
+      - essential.gamemode.spectator
+  essential.gamemode.others:
+    description: message
+    default: op
+  essential.gamemode.exempt:
+    description: message
+    default: op
+  essential.gamemode.adventure:
+    description: message
+    default: op
+  essential.gamemode.creative:
+    description: message
+    default: op
+  essential.gamemode.survival:
+    description: message
+    default: op
+  essential.gamemode.spectator:
+    description: message
+    default: op
+  essential.give:
+    description: message
+    default: op
+  essential.hat:
+    description: message
+    default: op
+  essential.heal:
+    description: message
+    default: op
+  essential.help:
+    description: message
+    default: op
+  essential.delhome:
+    description: message
+    default: op
+  essential.home:
+    description: message
+    default: op
+  essential.sethome:
+    description: message
+    default: op
+  essential.info:
+    description: message
+    default: op
+  essential.inventory:
+    description: message
+    default: op
+  essential.inventory.exempt:
+    description: message
+    default: op
+  essential.jail:
+    description: message
+    default: op
+  essential.jail.exempt:
+    description: message
+    default: op
+  essential.setjail:
+    description: message
+    default: op
+  essential.kick:
+    description: message
+    default: op
+  essential.kick.exempt:
+    description: message
+    default: op
+  essential.kit:
+    description: message
+    default: op
+  essential.motd:
+    description: message
+    default: op
+  essential.mute:
+    description: message
+    default: op
+  essential.mute.exempt:
+    description: message
+    default: op
+  essential.pay:
+    description: message
+    default: op
+  essential.pvp:
+    description: message
+    default: op
+  essential.pvp.others:
+    description: message
+    default: op
+  essential.pvp.exempt:
+    description: message
+    default: op
+  essential.reload:
+    description: message
+    default: op
+  essential.repair:
+    description: message
+    default: op
+  essential.respond:
+    description: message
+    default: op
+  essential.rtp:
+    description: message
+    default: op
+  essential.rules:
+    description: message
+    default: op
+  essential.skull:
+    description: message
+    default: op
+  essential.setspawn:
+    description: message
+    default: op
+  essential.spawn:
+    description: message
+    default: op
+  essential.spectate:
+    description: message
+    default: op
+  essential.tp:
+    description: message
+    default: op
+  essential.tphere:
+    description: message
+    default: op
+  essential.tpaccept:
+    description: message
+    default: op
+  essential.tpa:
+    description: message
+    default: op
+  essential.tpcancel:
+    description: message
+    default: op
+  essential.tpdeny:
+    description: message
+    default: op
+  essential.unban:
+    description: message
+    default: op
+  essential.vanish:
+    description: message
+    default: op
+  essential.vanish.others:
+    description: message
+    default: op
+  essential.vanish.exempt:
+    description: message
+    default: op
+  essential.delwarp:
+    description: message
+    default: op
+  essential.setwarp:
+    description: message
+    default: op
+  essential.warp:
+    description: message
+    default: op
+  essential.whisper:
+    description: message
+    default: op
+  essential.workbench:
+    description: message
+    default: op
+commands:
+  announcement:
+    description: message
+    permission: essential.announcement
+  anvil:
+    description: message
+    permission: essential.anvil
+  back:
+    description: message
+    permission: essential.back
+  balance:
+    description: message
+    permission: essential.balance
+  ban:
+    description: message
+    permission: essential.ban
+  chatcolor:
+    description: message
+    permission: essential.chatcolor
+  eco:
+    description: message
+    permission: essential.eco
+  enchant:
+    description: message
+    permission: essential.enchant
+  enderchest:
+    description: message
+    permission: essential.enderchest
+  feed:
+    description: message
+    permission: essential.feed
+  fly:
+    description: message
+    permission: essential.fly
+  freeze:
+    description: message
+    permission: essential.freeze
+  gamemode:
+    description: message
+    permission: essential.gamemode
+  gma:
+    description: message
+    permission: essential.gma
+  gmc:
+    description: message
+    permission: essential.gmc
+  gms:
+    description: message
+    permission: essential.gms
+  gmsp:
+    description: message
+    permission: essential.gmsp
+  give:
+    description: message
+    permission: essential.give
+  hat:
+    description: message
+    permission: essential.hat
+  heal:
+    description: message
+    permission: essential.heal
+  help:
+    description: message
+    permission: essential.help
+  delhome:
+    description: message
+    permission: essential.delhome
+  home:
+    description: message
+    permission: essential.home
+  sethome:
+    description: message
+    permission: essential.sethome
+  info:
+    description: message
+    permission: essential.info
+  inventory:
+    description: message
+    permission: essential.inventory
+  jail:
+    description: message
+    permission: essential.jail
+  setjail:
+    description: message
+    permission: essential.setjail
+  kick:
+    description: message
+    permission: essential.kick
+  kit:
+    description: message
+    permission: essential.kit
+  motd:
+    description: message
+    permission: essential.motd
+  mute:
+    description: message
+    permission: essential.mute
+  pay:
+    description: message
+    permission: essential.pay
+  pvp:
+    description: message
+    permission: essential.pvp
+  essential:
+    description: message
+    permission: essential.reload
+    aliases:
+      - ess
+  repair:
+    description: message
+    permission: essential.repair
+  respond:
+    description: message
+    permission: essential.respond
+  rtp:
+    description: message
+    permission: essential.rtp
+  rules:
+    description: message
+    permission: essential.rules
+  skull:
+    description: message
+    permission: essential.skull
+  setspawn:
+    description: message
+    permission: essential.setspawn
+  spawn:
+    description: message
+    permission: essential.spawn
+  spectate:
+    description: message
+    permission: essential.spectate
+  tp:
+    description: message
+    permission: essential.tp
+  tphere:
+    description: message
+    permission: essential.tphere
+  tpaccept:
+    description: message
+    permission: essential.tpaccept
+  tpa:
+    description: message
+    permission: essential.tpa
+  tpcancel:
+    description: message
+    permission: essential.tpcancel
+  tpdeny:
+    description: message
+    permission: essential.tpdeny
+  unban:
+    description: message
+    permission: essential.unban
+  vanish:
+    description: message
+    permission: essential.vanish
+  delwarp:
+    description: message
+    permission: essential.delwarp
+  setwarp:
+    description: message
+    permission: essential.setwarp
+  warp:
+    description: message
+    permission: essential.warp
+  whisper:
+    description: message
+    permission: essential.whisper
+  workbench:
+    description: message
+    permission: essential.workbench

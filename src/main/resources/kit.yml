@@ -1,0 +1,124 @@
+starter:
+  # Kits need cooldown
+  # Permissions: 'essential.kit.starter'
+  # Permissions: 'essential.kit.food'
+  # cooldown are in seconds
+  cooldown: 3600
+  materials:
+    item-1:
+      type: STONE_SWORD
+      amount: 1
+      display:
+        name: '&fStone Sword'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-2:
+      type: STONE_PICKAXE
+      amount: 1
+      display:
+        name: '&fStone Pickaxe'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-3:
+      type: STONE_AXE
+      amount: 1
+      display:
+        name: '&fStone Axe'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-4:
+      type: STONE_SHOVEL
+      amount: 1
+      display:
+        name: '&fStone Shovel'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-5:
+      type: STONE_HOE
+      amount: 1
+      display:
+        name: '&fStone Hoe'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-6:
+      type: LEATHER_HELMET
+      amount: 1
+      display:
+        name: '&fLeather Helmet'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-7:
+      type: LEATHER_CHESTPLATE
+      amount: 1
+      display:
+        name: '&fLeather Chestplate'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-8:
+      type: LEATHER_LEGGINGS
+      amount: 1
+      display:
+        name: '&fLeather Leggings'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-9:
+      type: LEATHER_BOOTS
+      amount: 1
+      display:
+        name: '&fLeather Boots'
+        lore:
+          - '&9from:'
+          - '&7-&6 Starter'
+      enchantments:
+        enchant-1:
+          type: DURABILITY
+          amount: 1
+    item-10:
+      type: COOKED_BEEF
+      amount: 16
+food:
+  cooldown: 1800
+  materials:
+    item-1:
+      type: COOKED_BEEF
+      amount: 16
