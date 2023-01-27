@@ -22,7 +22,7 @@ public class PlayerChat implements Listener {
         return PlaceholderAPI.setPlaceholders(player, "%essential_prefix%");
     }
     private String name(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%essential_name%");
+        return PlaceholderAPI.setPlaceholders(player, "%essential_player%");
     }
     private String suffix(Player player) {
         return PlaceholderAPI.setPlaceholders(player, "%essential_suffix%");
