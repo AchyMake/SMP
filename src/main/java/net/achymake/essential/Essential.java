@@ -33,6 +33,9 @@ public final class Essential extends JavaPlugin {
     }
     @Override
     public void onDisable(){
+        for (Integer tasks : Essential.tasks){
+            Bukkit.getScheduler().cancelTask(tasks);
+        }
         tasks.clear();
         vanished.clear();
         sendMessage("&cDisabled &f"+this.getName()+ " " +this.getDescription().getVersion());
