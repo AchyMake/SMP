@@ -120,6 +120,9 @@ permissions:
   essential.sethome:
     description: message
     default: op
+  essential.homes:
+    description: message
+    default: op
   essential.info:
     description: message
     default: op
@@ -322,6 +325,9 @@ commands:
   sethome:
     description: message
     permission: essential.sethome
+  homes:
+    description: message
+    permission: essential.homes
   info:
     description: message
     permission: essential.info

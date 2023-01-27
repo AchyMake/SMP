@@ -21,6 +21,7 @@ import net.achymake.essential.command.help.HelpCommand;
 import net.achymake.essential.command.home.DelhomeCommand;
 import net.achymake.essential.command.home.HomeCommand;
 import net.achymake.essential.command.home.SethomeCommand;
+import net.achymake.essential.command.homes.HomesCommand;
 import net.achymake.essential.command.info.InfoCommand;
 import net.achymake.essential.command.inventory.InventoryCommand;
 import net.achymake.essential.command.jail.JailCommand;
@@ -83,6 +84,7 @@ public class Commands {
         plugin.getCommand("delhome").setExecutor(new DelhomeCommand());
         plugin.getCommand("home").setExecutor(new HomeCommand());
         plugin.getCommand("sethome").setExecutor(new SethomeCommand());
+        plugin.getCommand("homes").setExecutor(new HomesCommand());
         plugin.getCommand("info").setExecutor(new InfoCommand());
         plugin.getCommand("inventory").setExecutor(new InventoryCommand());
         plugin.getCommand("jail").setExecutor(new JailCommand());

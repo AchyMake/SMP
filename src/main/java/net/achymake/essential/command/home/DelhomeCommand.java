@@ -23,11 +23,15 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1){
                 Player player = (Player) sender;
                 String home = args[0];
-                if (PlayerConfig.get(player).getKeys(true).contains("homes."+home)){
-                    deleteHome(player,home);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+home+"&6 deleted"));
+                if (hasHomes(player)){
+                    if (homeExist(player,home)){
+                        deleteHome(player,home);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+home+"&6 deleted"));
+                    }else{
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',home+"&c does not exist"));
+                    }
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',home+"&c does not exist"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou havent set any homes"));
                 }
             }
         }
@@ -38,8 +42,8 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         Player player = (Player) sender;
         if (args.length == 1) {
-            if (PlayerConfig.get(player).getKeys(true).contains("homes")){
-                for (String home : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+            if (hasHomes(player)){
+                for (String home : getHomeNames(player)){
                     commands.add(home);
                 }
                 return commands;
@@ -56,5 +60,20 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         } catch (IOException e) {
             Essential.instance.sendMessage(e.getMessage());
         }
+    }
+    private boolean hasHomes(Player player){
+        return PlayerConfig.get(player).getKeys(false).contains("homes");
+    }
+    public static boolean homeExist(Player player, String homeName){
+        return PlayerConfig.get(player).getKeys(true).contains("homes."+homeName);
+    }
+    private List<String> getHomeNames(Player player){
+        List<String> homes = new ArrayList<>();
+        if (hasHomes(player)){
+            for (String homeNames : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+                homes.add(homeNames);
+            }
+        }
+        return homes;
     }
 }

@@ -23,34 +23,36 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length == 0){
                 Player player = (Player) sender;
-                if (PlayerConfig.get(player).getKeys(false).contains("homes")){
-                    if (PlayerConfig.get(player).getKeys(true).contains("homes.home")){
-                        setHomeLocation(player,"home");
+                String homeName = "home";
+                if (hasHomes(player)){
+                    if (homeExist(player,homeName)){
+                        setHomeLocation(player,homeName);
                     }else if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                        setHomeLocation(player,"home");
+                        setHomeLocation(player,homeName);
                     }else{
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have reach your limit"));
                     }
                 }else{
-                    setHomeLocation(player,"home");
+                    setHomeLocation(player,homeName);
                 }
             }else if (args.length == 1){
                 Player player = (Player) sender;
-                if (args[0].equalsIgnoreCase("bed")){
+                String homeName = args[0];
+                if (homeName.equalsIgnoreCase("bed")){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou cant set home for &f"+args[0]));
-                }else if (args[0].equalsIgnoreCase("buy")){
+                }else if (homeName.equalsIgnoreCase("buy")){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou cant set home for &f"+args[0]));
                 }else{
                     if (PlayerConfig.get(player).getKeys(false).contains("homes")){
-                        if (PlayerConfig.get(player).getKeys(true).contains("homes."+args[0])){
-                            setHomeLocation(player,args[0]);
+                        if (PlayerConfig.get(player).getKeys(true).contains("homes."+homeName)){
+                            setHomeLocation(player,homeName);
                         }else if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                            setHomeLocation(player,args[0]);
+                            setHomeLocation(player,homeName);
                         }else{
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have reach your limit"));
                         }
                     }else{
-                        setHomeLocation(player,args[0]);
+                        setHomeLocation(player,homeName);
                     }
                 }
             }
@@ -62,14 +64,20 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         Player player = (Player) sender;
         if (args.length == 1) {
-            if (PlayerConfig.get(player).getKeys(false).contains("homes")){
-                for (String home : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+            if (hasHomes(player)){
+                for (String home : getHomeNames(player)){
                     commands.add(home);
                 }
                 return commands;
             }
         }
         return commands;
+    }
+    private boolean hasHomes(Player player){
+        return PlayerConfig.get(player).getKeys(false).contains("homes");
+    }
+    private boolean homeExist(Player player, String homeName){
+        return PlayerConfig.get(player).getKeys(true).contains("homes."+homeName);
     }
     private void setHomeLocation(Player player,String home){
         File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
@@ -86,5 +94,14 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
             Essential.instance.sendMessage(e.getMessage());
         }
         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+home+"&6 has been set"));
+    }
+    private List<String> getHomeNames(Player player){
+        List<String> homes = new ArrayList<>();
+        if (hasHomes(player)){
+            for (String homeNames : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+                homes.add(homeNames);
+            }
+        }
+        return homes;
     }
 }
