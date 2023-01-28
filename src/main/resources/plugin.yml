@@ -123,6 +123,12 @@ permissions:
   essential.homes:
     description: message
     default: op
+  essential.homes.teleport:
+    description: message
+    default: op
+  essential.homes.delete:
+    description: message
+    default: op
   essential.info:
     description: message
     default: op

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,14 @@ public class HatCommand implements CommandExecutor, TabCompleter {
                         heldItem.setItemMeta(player.getInventory().getItemInMainHand().getItemMeta());
                         heldItem.setAmount(1);
                         player.getInventory().setHelmet(heldItem);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You are now wearing &f"+player.getInventory().getItemInMainHand().getType().toString().toLowerCase()));
+                        ItemMeta itemMeta = player.getInventory().getItemInMainHand().getItemMeta();
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You are now wearing &f"+heldItem.getItemMeta().getLocalizedName()));
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount()-1);
                     }else{
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not holding any item"));
                     }
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are already wearing &f"+player.getInventory().getHelmet().getType().toString().toLowerCase()));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are already wearing &f"+player.getInventory().getHelmet().getItemMeta().getLocalizedName()));
                 }
             }
         }
