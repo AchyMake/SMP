@@ -13,6 +13,8 @@ import net.achymake.essential.listeners.connection.*;
 import net.achymake.essential.listeners.interact.PlayerInteractFrozen;
 import net.achymake.essential.listeners.interact.PlayerInteractJailed;
 import net.achymake.essential.listeners.player.PlayerDeath;
+import net.achymake.essential.listeners.player.PlayerPrepareAnvil;
+import net.achymake.essential.listeners.player.PlayerPrepareSign;
 import net.achymake.essential.listeners.player.PlayerRespawn;
 import net.achymake.essential.listeners.move.PlayerMoveFrozen;
 import net.achymake.essential.listeners.move.PlayerMoveVanished;
@@ -45,6 +47,8 @@ public class Events {
         new PlayerMoveFrozen(plugin);
         new PlayerMoveVanished(plugin);
         new PlayerDeath(plugin);
+        new PlayerPrepareAnvil(plugin);
+        new PlayerPrepareSign(plugin);
         new PlayerRespawn(plugin);
         new PlayerDamagePlayer(plugin);
         new PlayerDamagePlayerByArrow(plugin);

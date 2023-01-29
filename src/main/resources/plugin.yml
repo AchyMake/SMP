@@ -34,6 +34,15 @@ permissions:
   essential.chatcolor:
     description: message
     default: op
+  essential.chatcolor.anvil:
+    description: message
+    default: op
+  essential.chatcolor.chat:
+    description: message
+    default: op
+  essential.chatcolor.sign:
+    description: message
+    default: op
   essential.eco:
     description: message
     default: op

@@ -17,7 +17,7 @@ public class PlayerChat implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChatFormat (AsyncPlayerChatEvent event){
-        if (event.getPlayer().hasPermission("essential.chatcolor")){
+        if (event.getPlayer().hasPermission("essential.chatcolor.chat")){
             event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: "+event.getMessage()));
         }else{
             event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: ")+event.getMessage());

@@ -40,7 +40,6 @@ import net.achymake.essential.command.rules.RulesCommand;
 import net.achymake.essential.command.skull.SkullCommand;
 import net.achymake.essential.command.spawn.SetspawnCommand;
 import net.achymake.essential.command.spawn.SpawnCommand;
-import net.achymake.essential.command.spectate.SpectateCommand;
 import net.achymake.essential.command.tp.TPCommand;
 import net.achymake.essential.command.tp.TPHereCommand;
 import net.achymake.essential.command.tpa.TPACommand;
@@ -100,7 +99,6 @@ public class Commands {
         plugin.getCommand("skull").setExecutor(new SkullCommand());
         plugin.getCommand("setspawn").setExecutor(new SetspawnCommand());
         plugin.getCommand("spawn").setExecutor(new SpawnCommand());
-        plugin.getCommand("spectate").setExecutor(new SpectateCommand());
         plugin.getCommand("tp").setExecutor(new TPCommand());
         plugin.getCommand("tphere").setExecutor(new TPHereCommand());
         plugin.getCommand("tpaccept").setExecutor(new TPAcceptCommand());

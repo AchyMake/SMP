@@ -16,7 +16,7 @@ public class MotdConfig {
         if (!configFile.exists()){
             List<String> motd = new ArrayList<>();
             motd.add("&6This is message of the day");
-            motd.add("&6you can create any motd and execute with the command");
+            motd.add("&6you can create any motd");
             motd.add("&6and execute with the command /motd name");
             get().addDefault("motd",motd);
             List<String> welcome = new ArrayList<>();
