@@ -1,7 +1,7 @@
 package net.achymake.essential.listeners.connection;
 
 import net.achymake.essential.Essential;
-import net.achymake.essential.settings.VanishSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,10 +15,10 @@ public class PlayerQuitVanished implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuitWithTPATask (PlayerQuitEvent event){
-        if (!VanishSettings.isVanished(event.getPlayer()))return;
-        toggleVanish(event.getPlayer());
+        if (!PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
+        quitVanished(event.getPlayer());
     }
-    private void toggleVanish(Player player){
+    private void quitVanished(Player player){
         Essential.vanished.remove(player);
         player.setAllowFlight(false);
         player.setCollidable(true);

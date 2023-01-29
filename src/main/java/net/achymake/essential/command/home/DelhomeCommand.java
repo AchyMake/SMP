@@ -1,18 +1,13 @@
 package net.achymake.essential.command.home;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +17,12 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length == 1){
                 Player player = (Player) sender;
-                String home = args[0];
-                if (hasHomes(player)){
-                    if (homeExist(player,home)){
-                        deleteHome(player,home);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+home+"&6 deleted"));
-                    }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',home+"&c does not exist"));
-                    }
+                String homeName = args[0];
+                if (PlayerConfig.get(player).getKeys(false).contains("homes."+homeName)){
+                    PlayerConfig.setString(player,"homes."+homeName,null);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 deleted"));
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou havent set any homes"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',homeName+"&c does not exist"));
                 }
             }
         }
@@ -42,38 +33,10 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         Player player = (Player) sender;
         if (args.length == 1) {
-            if (hasHomes(player)){
-                for (String home : getHomeNames(player)){
-                    commands.add(home);
-                }
-                return commands;
+            for (String home : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+                commands.add(home);
             }
         }
         return commands;
-    }
-    private void deleteHome(Player player, String home){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("homes."+home,null);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Essential.instance.sendMessage(e.getMessage());
-        }
-    }
-    private boolean hasHomes(Player player){
-        return PlayerConfig.get(player).getKeys(false).contains("homes");
-    }
-    public static boolean homeExist(Player player, String homeName){
-        return PlayerConfig.get(player).getKeys(true).contains("homes."+homeName);
-    }
-    private List<String> getHomeNames(Player player){
-        List<String> homes = new ArrayList<>();
-        if (hasHomes(player)){
-            for (String homeNames : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
-                homes.add(homeNames);
-            }
-        }
-        return homes;
     }
 }

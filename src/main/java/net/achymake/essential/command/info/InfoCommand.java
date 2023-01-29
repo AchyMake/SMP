@@ -1,10 +1,7 @@
 package net.achymake.essential.command.info;
 
 import net.achymake.essential.files.PlayerConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,11 +20,11 @@ public class InfoCommand implements CommandExecutor, TabCompleter {
         } else if (args.length == 1) {
             OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
             if (PlayerConfig.exist(offlinePlayer)){
-                if (PlayerConfig.get(offlinePlayer).getBoolean("banned")){
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Banned:&f "+ PlayerConfig.get(offlinePlayer).getBoolean("banned")));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Ban reason:&f "+ PlayerConfig.get(offlinePlayer).getString("banned-reason")));
+                if (offlinePlayer.isBanned()){
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Banned:&f "+ offlinePlayer.isBanned()));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Ban reason:&f "+ sender.getServer().getBanList(BanList.Type.NAME).getBanEntry(offlinePlayer.getName()).getReason()));
                 }else{
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Name:&f "+ PlayerConfig.get(offlinePlayer).getString("name")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Name:&f "+ offlinePlayer.getName()));
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Online:&f "+ offlinePlayer.isOnline()));
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Max homes:&f "+ PlayerConfig.get(offlinePlayer).getInt("max-homes")));
                     if (offlinePlayer.isOnline()){
@@ -49,7 +46,7 @@ public class InfoCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             }else{
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined the server"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
             }
 
         }

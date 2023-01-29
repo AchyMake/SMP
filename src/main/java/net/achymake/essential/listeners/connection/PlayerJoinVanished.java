@@ -1,7 +1,7 @@
 package net.achymake.essential.listeners.connection;
 
 import net.achymake.essential.Essential;
-import net.achymake.essential.settings.VanishSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,13 +15,13 @@ public class PlayerJoinVanished implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerQuitWithTPATask (PlayerJoinEvent event){
-        if (!VanishSettings.isVanished(event.getPlayer()))return;
-        toggleVanish(event.getPlayer());
+    public void onPlayerJoinedVanished (PlayerJoinEvent event){
+        if (!PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
+        joinedVanished(event.getPlayer());
         event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You joined back vanished"));
     }
-    private void toggleVanish(Player player){
-        for (Player players : Bukkit.getOnlinePlayers()){
+    private void joinedVanished(Player player){
+        for (Player players : player.getServer().getOnlinePlayers()){
             players.hidePlayer(Essential.instance,player);
         }
         Essential.vanished.add(player);

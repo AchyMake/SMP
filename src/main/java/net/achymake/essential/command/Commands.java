@@ -31,18 +31,15 @@ import net.achymake.essential.command.kit.KitCommand;
 import net.achymake.essential.command.motd.MotdCommand;
 import net.achymake.essential.command.mute.MuteCommand;
 import net.achymake.essential.command.pay.PayCommand;
-import net.achymake.essential.command.prefix.PrefixCommand;
 import net.achymake.essential.command.pvp.PVPCommand;
 import net.achymake.essential.command.reload.EssentialCommand;
 import net.achymake.essential.command.repair.RepairCommand;
 import net.achymake.essential.command.respond.RespondCommand;
-import net.achymake.essential.command.rtp.RTPCommand;
 import net.achymake.essential.command.rules.RulesCommand;
 import net.achymake.essential.command.skull.SkullCommand;
 import net.achymake.essential.command.spawn.SetspawnCommand;
 import net.achymake.essential.command.spawn.SpawnCommand;
 import net.achymake.essential.command.spectate.SpectateCommand;
-import net.achymake.essential.command.suffix.SuffixCommand;
 import net.achymake.essential.command.tp.TPCommand;
 import net.achymake.essential.command.tp.TPHereCommand;
 import net.achymake.essential.command.tpa.TPACommand;
@@ -56,7 +53,6 @@ import net.achymake.essential.command.warp.SetwarpCommand;
 import net.achymake.essential.command.warp.WarpCommand;
 import net.achymake.essential.command.whisper.WhisperCommand;
 import net.achymake.essential.command.workbench.WorkbenchCommand;
-import net.achymake.essential.command.world.WorldCommand;
 
 public class Commands {
     public static void start(Essential plugin){
@@ -94,18 +90,15 @@ public class Commands {
         plugin.getCommand("motd").setExecutor(new MotdCommand());
         plugin.getCommand("mute").setExecutor(new MuteCommand());
         plugin.getCommand("pay").setExecutor(new PayCommand());
-        plugin.getCommand("prefix").setExecutor(new PrefixCommand());
         plugin.getCommand("pvp").setExecutor(new PVPCommand());
         plugin.getCommand("essential").setExecutor(new EssentialCommand());
         plugin.getCommand("repair").setExecutor(new RepairCommand());
         plugin.getCommand("respond").setExecutor(new RespondCommand());
-        plugin.getCommand("rtp").setExecutor(new RTPCommand());
         plugin.getCommand("rules").setExecutor(new RulesCommand());
         plugin.getCommand("skull").setExecutor(new SkullCommand());
         plugin.getCommand("setspawn").setExecutor(new SetspawnCommand());
         plugin.getCommand("spawn").setExecutor(new SpawnCommand());
         plugin.getCommand("spectate").setExecutor(new SpectateCommand());
-        plugin.getCommand("suffix").setExecutor(new SuffixCommand());
         plugin.getCommand("tp").setExecutor(new TPCommand());
         plugin.getCommand("tphere").setExecutor(new TPHereCommand());
         plugin.getCommand("tpaccept").setExecutor(new TPAcceptCommand());
@@ -119,6 +112,5 @@ public class Commands {
         plugin.getCommand("warp").setExecutor(new WarpCommand());
         plugin.getCommand("whisper").setExecutor(new WhisperCommand());
         plugin.getCommand("workbench").setExecutor(new WorkbenchCommand());
-        plugin.getCommand("world").setExecutor(new WorldCommand());
     }
 }

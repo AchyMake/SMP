@@ -1,6 +1,5 @@
 package net.achymake.essential.command.jail;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.files.LocationConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
@@ -11,12 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,31 +84,26 @@ public class JailCommand implements CommandExecutor, TabCompleter {
     }
     private void toggleJail(Player player){
         Location location = player.getLocation();
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (config.getBoolean("jailed")){
-            Location back = new Location(Bukkit.getWorld(config.getString("jail.world")),config.getDouble("jail.x"),config.getDouble("jail.y"),config.getDouble("jail.z"),config.getLong("jail.yaw"),config.getLong("jail.pitch"));
+        if (isJailed(player)){
+            PlayerConfig.toggle(player,"jailed");
+            String worldName = PlayerConfig.get(player).getString("jail.world");
+            double x = PlayerConfig.get(player).getDouble("jail.x");
+            double y = PlayerConfig.get(player).getDouble("jail.y");
+            double z = PlayerConfig.get(player).getDouble("jail.z");
+            float yaw = PlayerConfig.get(player).getLong("jail.yaw");
+            float pitch = PlayerConfig.get(player).getLong("jail.pitch");
+            Location back = new Location(Bukkit.getWorld(worldName),x,y,z,yaw,pitch);
+            back.getChunk().load();
             player.teleport(back);
-            config.set("jailed",false);
-            config.set("jail",null);
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
+            PlayerConfig.setString(player,"jail",null);
         }else{
-            config.set("jailed",true);
-            config.set("jail.world",location.getWorld().getName());
-            config.set("jail.x",location.getX());
-            config.set("jail.y",location.getY());
-            config.set("jail.z",location.getZ());
-            config.set("jail.yaw",location.getYaw());
-            config.set("jail.pitch",location.getPitch());
-            try {
-                config.save(file);
-            } catch (IOException e) {
-                Essential.instance.sendMessage(e.getMessage());
-            }
+            PlayerConfig.toggle(player,"jailed");
+            PlayerConfig.setString(player,"jail.world",location.getWorld().getName());
+            PlayerConfig.setDouble(player,"jail.x",location.getX());
+            PlayerConfig.setDouble(player,"jail.y",location.getY());
+            PlayerConfig.setDouble(player,"jail.z",location.getZ());
+            PlayerConfig.setFloat(player,"jail.yaw",location.getYaw());
+            PlayerConfig.setFloat(player,"jail.yaw",location.getPitch());
             getJail().getChunk().load();
             player.teleport(getJail());
         }

@@ -1,6 +1,6 @@
 package net.achymake.essential.command.freeze;
 
-import net.achymake.essential.settings.PlayerSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -45,11 +45,11 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
         return commands;
     }
     private void toggleFreeze(Player player, Player target){
-        if (PlayerSettings.isFrozen(target)){
-            PlayerSettings.toggleFreeze(target);
+        if (PlayerConfig.get(target).getBoolean("frozen")){
+            PlayerConfig.toggle(target,"frozen");
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You unfroze &f"+target.getName()));
         }else{
-            PlayerSettings.toggleFreeze(target);
+            PlayerConfig.toggle(target,"frozen");
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You froze &f"+target.getName()));
         }
 

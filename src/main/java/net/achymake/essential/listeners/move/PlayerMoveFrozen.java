@@ -1,7 +1,7 @@
 package net.achymake.essential.listeners.move;
 
 import net.achymake.essential.Essential;
-import net.achymake.essential.settings.PlayerSettings;
+import net.achymake.essential.files.PlayerConfig;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ public class PlayerMoveFrozen implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuitWithTPATask (PlayerMoveEvent event){
-        if (!PlayerSettings.isFrozen(event.getPlayer()))return;
+        if (!PlayerConfig.get(event.getPlayer()).getBoolean("frozen"))return;
         event.setCancelled(true);
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to move")));
     }

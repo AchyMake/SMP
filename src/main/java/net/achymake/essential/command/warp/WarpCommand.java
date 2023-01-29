@@ -1,6 +1,5 @@
 package net.achymake.essential.command.warp;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.files.LocationConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,12 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +20,17 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length == 1){
                 Player player = (Player) sender;
-                if (warpExist(args[0])){
-                    if (args[0].equalsIgnoreCase("jail")){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c does not exist"));
+                String warpName = args[0];
+                if (warpExist(warpName)){
+                    if (warpName.equalsIgnoreCase("jail")){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',warpName+"&c does not exist"));
                     }else{
-                        setLastLocation(player);
-                        getWarp(args[0]).getChunk().load();
-                        player.teleport(getWarp(args[0]));
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to &f"+args[0]));
+                        getWarp(warpName).getChunk().load();
+                        player.teleport(getWarp(warpName));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to &f"+warpName));
                     }
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c does not exist"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',warpName+"&c does not exist"));
                 }
             }
         }
@@ -67,21 +62,5 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         float yaw = LocationConfig.get().getLong(warpName+".yaw");
         float pitch = LocationConfig.get().getLong(warpName+".pitch");
         return new Location(world,x,y,z,yaw,pitch);
-    }
-    private void setLastLocation(Player player){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        Location location = player.getLocation();
-        config.set("last-location.world",location.getWorld().getName());
-        config.set("last-location.x",location.getX());
-        config.set("last-location.y",location.getY());
-        config.set("last-location.z",location.getZ());
-        config.set("last-location.yaw",location.getYaw());
-        config.set("last-location.pitch",location.getPitch());
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Essential.instance.sendMessage(e.getMessage());
-        }
     }
 }

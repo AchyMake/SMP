@@ -1,7 +1,7 @@
 package net.achymake.essential.command.pay;
 
 import net.achymake.essential.files.PlayerConfig;
-import net.achymake.essential.settings.Economy;
+import net.achymake.essential.api.EconomyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -20,21 +20,17 @@ public class PayCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (args.length == 0){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage: &f/pay player amount"));
-            }else if (args.length == 1){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage: &f/pay player amount"));
-            }else if (args.length == 2) {
+            if (args.length == 2) {
                 OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
                 if (PlayerConfig.exist(offlinePlayer)){
-                    if (Integer.parseInt(args[1]) <= Economy.getEconomy(player)){
-                        Economy.addEconomy(offlinePlayer, Double.parseDouble(args[1]));
-                        Economy.removeEconomy(player, Double.valueOf(args[1]));
+                    if (Integer.parseInt(args[1]) <= EconomyProvider.getEconomy(player)){
+                        EconomyProvider.addEconomy(offlinePlayer, Double.parseDouble(args[1]));
+                        EconomyProvider.removeEconomy(player, Double.valueOf(args[1]));
                         if (offlinePlayer.isOnline()){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
-                            Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
+                            Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
                         }else{
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c$"+ Economy.getFormat(Double.valueOf(args[1]))));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
                         }
                     }else{
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have enough"));

@@ -1,6 +1,6 @@
 package net.achymake.essential.command.respond;
 
-import net.achymake.essential.settings.PlayerSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RespondCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -18,10 +19,10 @@ public class RespondCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length > 0){
                 Player player = (Player) sender;
-                if (PlayerSettings.hasLastWhisper(player)){
-                    Player target = PlayerSettings.getLastWhisper(player);
+                if (PlayerConfig.get(player).getKeys(false).contains("last-whisper")){
+                    Player target = player.getServer().getPlayer(UUID.fromString(PlayerConfig.get(player).getString("last-whisper")));
                     if (target == null){
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&fUnknown&c is either offline or has never joined"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&fUnknown&c is offline"));
                     }else{
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String words : args){
@@ -31,7 +32,7 @@ public class RespondCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7You > "+target.getName()+": "+stringBuilder));
                         target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7"+player.getName()+" > You: "+stringBuilder));
                         Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&',"&7"+player.getName()+" > "+target.getName()+": "+stringBuilder),"essential.notify.whisper");
-                        PlayerSettings.setLastWhisper(target,player);
+                        PlayerConfig.setString(target,"last-whisper",player.getUniqueId().toString());
                     }
                 }else{
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&fUnknown&c is either offline or has never joined"));

@@ -20,7 +20,7 @@ public class TPASettings {
         return PlayerConfig.get(offlinePlayer).getInt("tpa-task");
     }
     public static boolean hasTPARequest(OfflinePlayer offlinePlayer){
-        return PlayerConfig.get(offlinePlayer).getKeys(false).contains("tpa-request-from");
+        return PlayerConfig.get(offlinePlayer).getKeys(false).contains("tpa-request-sent");
     }
     public static boolean hasSentTPARequest(OfflinePlayer offlinePlayer){
         return PlayerConfig.get(offlinePlayer).getKeys(false).contains("tpa-request-sent");

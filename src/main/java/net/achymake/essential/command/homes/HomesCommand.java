@@ -27,14 +27,14 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length == 0){
                 Player player = (Player) sender;
-                if (getHomeCount(player) > 0){
+                if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size() > 0){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Homes:"));
                     if (player.hasPermission("homes.bed")){
                         if (player.getBedSpawnLocation() != null){
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f bed"));
                         }
                     }
-                    for (String listedHomes : getHomeNames(player)){
+                    for (String listedHomes : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+listedHomes));
                     }
                 }else{
@@ -76,32 +76,11 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
         } else if (args.length == 3) {
             if (sender.hasPermission("essential.homes.teleport")){
                 OfflinePlayer offlinePlayer = sender.getServer().getOfflinePlayer(args[1]);
-                if (hasHomes(offlinePlayer)){
-                    for (String home : getHomeNames(offlinePlayer)){
-                        commands.add(home);
-                    }
+                for (String home : PlayerConfig.get(offlinePlayer).getConfigurationSection("homes").getKeys(false)){
+                    commands.add(home);
                 }
             }
         }
         return commands;
-    }
-    private boolean hasHomes(OfflinePlayer offlinePlayer){
-        return PlayerConfig.get(offlinePlayer).getKeys(false).contains("homes");
-    }
-    private List<String> getHomeNames(OfflinePlayer offlinePlayer){
-        List<String> homes = new ArrayList<>();
-        if (hasHomes(offlinePlayer)){
-            for (String homeNames : PlayerConfig.get(offlinePlayer).getConfigurationSection("homes").getKeys(false)){
-                homes.add(homeNames);
-            }
-        }
-        return homes;
-    }
-    private int getHomeCount(OfflinePlayer offlinePlayer){
-        if (hasHomes(offlinePlayer)){
-            return PlayerConfig.get(offlinePlayer).getConfigurationSection("homes").getKeys(false).size();
-        }else{
-            return 0;
-        }
     }
 }

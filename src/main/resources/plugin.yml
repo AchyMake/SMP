@@ -102,6 +102,9 @@ permissions:
   essential.give:
     description: message
     default: op
+  essential.group:
+    description: message
+    default: op
   essential.hat:
     description: message
     default: op
@@ -168,9 +171,6 @@ permissions:
   essential.pay:
     description: message
     default: op
-  essential.prefix:
-    description: message
-    default: op
   essential.pvp:
     description: message
     default: op
@@ -205,9 +205,6 @@ permissions:
     description: message
     default: op
   essential.spectate:
-    description: message
-    default: op
-  essential.suffix:
     description: message
     default: op
   essential.tp:
@@ -253,9 +250,6 @@ permissions:
     description: message
     default: op
   essential.workbench:
-    description: message
-    default: op
-  essential.world:
     description: message
     default: op
 commands:
@@ -313,6 +307,9 @@ commands:
   give:
     description: message
     permission: essential.give
+  group:
+    description: message
+    permission: essential.group
   hat:
     description: message
     permission: essential.hat
@@ -361,9 +358,6 @@ commands:
   pay:
     description: message
     permission: essential.pay
-  prefix:
-    description: message
-    permission: essential.prefix
   pvp:
     description: message
     permission: essential.pvp
@@ -396,9 +390,6 @@ commands:
   spectate:
     description: message
     permission: essential.spectate
-  suffix:
-    description: message
-    permission: essential.suffix
   tp:
     description: message
     permission: essential.tp
@@ -438,6 +429,3 @@ commands:
   workbench:
     description: message
     permission: essential.workbench
-  world:
-    description: message
-    permission: essential.world

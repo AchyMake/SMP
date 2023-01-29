@@ -19,12 +19,12 @@ public class PlayerChat implements Listener {
         event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: ")+event.getMessage());
     }
     private String prefix(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%essential_prefix%");
+        return PlaceholderAPI.setPlaceholders(player, "%luckperms_prefix%");
     }
     private String name(Player player) {
         return PlaceholderAPI.setPlaceholders(player, "%essential_player%");
     }
     private String suffix(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%essential_suffix%");
+        return PlaceholderAPI.setPlaceholders(player, "%luckperms_suffix%");
     }
 }

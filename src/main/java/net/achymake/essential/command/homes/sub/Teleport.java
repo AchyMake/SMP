@@ -1,17 +1,12 @@
 package net.achymake.essential.command.homes.sub;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.command.homes.HomesSubCommand;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import java.io.File;
 
 public class Teleport extends HomesSubCommand {
     @Override
@@ -35,35 +30,21 @@ public class Teleport extends HomesSubCommand {
             if (args.length == 3) {
                 OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[1]);
                 String homeName = args[2];
-                if (hasHomes(offlinePlayer)){
-                    if (homeExist(offlinePlayer,homeName)){
-                        getHome(offlinePlayer,homeName).getChunk().load();
-                        player.teleport(getHome(offlinePlayer,homeName));
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+homeName+ "&6 of &f"+offlinePlayer.getName()));
-                    }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c do not have &f"+homeName));
-                    }
+                if (PlayerConfig.get(offlinePlayer).getConfigurationSection("homes").getKeys(false).contains(homeName)){
+                    String worldName = PlayerConfig.get(offlinePlayer).getString("homes."+homeName+".world");
+                    double x = PlayerConfig.get(offlinePlayer).getDouble("homes."+homeName+".x");
+                    double y = PlayerConfig.get(offlinePlayer).getDouble("homes."+homeName+".y");
+                    double z = PlayerConfig.get(offlinePlayer).getDouble("homes."+homeName+".z");
+                    float yaw = PlayerConfig.get(offlinePlayer).getLong("homes."+homeName+".yaw");
+                    float pitch = PlayerConfig.get(offlinePlayer).getLong("homes."+homeName+".pitch");
+                    Location location = new Location(Bukkit.getWorld(worldName),x,y,z,yaw,pitch);
+                    location.getChunk().load();
+                    player.teleport(location);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+homeName+ "&6 of &f"+offlinePlayer.getName()));
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c do not have any homes"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c do not have &f"+homeName));
                 }
             }
         }
-    }
-    private boolean hasHomes(OfflinePlayer offlinePlayer){
-        return PlayerConfig.get(offlinePlayer).getKeys(false).contains("homes");
-    }
-    private boolean homeExist(OfflinePlayer offlinePlayer, String homeName){
-        return PlayerConfig.get(offlinePlayer).getKeys(true).contains("homes."+homeName);
-    }
-    private Location getHome(OfflinePlayer offlinePlayer, String home) {
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+offlinePlayer.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        String world = config.getString("homes."+home+".world");
-        double x = config.getDouble("homes."+home+".x");
-        double y = config.getDouble("homes."+home+".y");
-        double z = config.getDouble("homes."+home+".z");
-        float yaw = config.getLong("homes."+home+".yaw");
-        float pitch = config.getLong("homes."+home+".pitch");
-        return new Location(Bukkit.getWorld(world),x,y,z,yaw,pitch);
     }
 }

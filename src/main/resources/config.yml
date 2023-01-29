@@ -20,16 +20,6 @@ commands:
     feed: 120
     heal: 120
     repair: 3600
-    rtp: 3600
-  rtp:
-    world: world
-    spread: 500
-    safe-materials:
-      - GRASS_BLOCK
-      - PODZOL
-      - GRASS
-      - SNOW
-      - STONE
   disable:
     - /tell
     - /me

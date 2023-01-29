@@ -1,6 +1,6 @@
 package net.achymake.essential.command.whisper;
 
-import net.achymake.essential.settings.PlayerSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +29,7 @@ public class WhisperCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7You > "+target.getName()+": "+stringBuilder));
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7"+player.getName()+" > You: "+stringBuilder));
                     player.getServer().broadcast(ChatColor.translateAlternateColorCodes('&',"&7"+player.getName()+" > "+target.getName()+": "+stringBuilder),"essential.notify.whisper");
-                    PlayerSettings.setLastWhisper(target,player);
+                    PlayerConfig.setString(target,"last-whisper",player.getUniqueId().toString());
                 }
             }
         }

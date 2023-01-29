@@ -24,7 +24,6 @@ public class HatCommand implements CommandExecutor, TabCompleter {
                         heldItem.setItemMeta(player.getInventory().getItemInMainHand().getItemMeta());
                         heldItem.setAmount(1);
                         player.getInventory().setHelmet(heldItem);
-                        ItemMeta itemMeta = player.getInventory().getItemInMainHand().getItemMeta();
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You are now wearing &f"+heldItem.getItemMeta().getLocalizedName()));
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount()-1);
                     }else{

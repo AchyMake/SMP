@@ -1,7 +1,7 @@
 package net.achymake.essential.listeners.pvp;
 
 import net.achymake.essential.Essential;
-import net.achymake.essential.settings.PlayerSettings;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -20,9 +20,9 @@ public class PlayerDamagePlayer implements Listener {
         if (!event.getEntity().getType().equals(EntityType.PLAYER))return;
         Player player = (Player) event.getDamager();
         Player target = (Player) event.getEntity();
-        if (!PlayerSettings.hasPVP(player)){
+        if (!PlayerConfig.get(player).getBoolean("pvp")){
             event.setCancelled(true);
-        } else if (!PlayerSettings.hasPVP(target)){
+        } else if (!PlayerConfig.get(target).getBoolean("pvp")){
             event.setCancelled(true);
         }
     }

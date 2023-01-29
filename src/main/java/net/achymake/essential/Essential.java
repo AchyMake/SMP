@@ -1,11 +1,12 @@
 package net.achymake.essential;
 
+import net.achymake.essential.api.LuckPermsSetup;
+import net.achymake.essential.api.PlaceholderSetup;
 import net.achymake.essential.api.VaultSetup;
 import net.achymake.essential.command.Commands;
 import net.achymake.essential.files.Files;
 import net.achymake.essential.listeners.Events;
-import net.achymake.essential.settings.EssPlaceholder;
-import net.achymake.essential.tablist.Tablist;
+import net.achymake.essential.version.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,28 +16,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Essential extends JavaPlugin {
-    public static List<Integer> tasks = new ArrayList<>();
     public static List<Player> vanished = new ArrayList<>();
     public static Essential instance;
     @Override
     public void onEnable(){
-        new EssPlaceholder().register();
-        VaultSetup.setup(this);
         getConfig().options().copyDefaults(true);
         saveConfig();
         instance = this;
+        VaultSetup.setup(this);
+        LuckPermsSetup.setup(this);
+        PlaceholderSetup.setup(this);
         Files.start();
         Events.start(this);
         Commands.start(this);
-        Tablist.start(this);
+        UpdateChecker.getUpdate(this);
         sendMessage("&aEnabled &f"+this.getName()+ " " +this.getDescription().getVersion());
     }
     @Override
     public void onDisable(){
-        for (Integer tasks : Essential.tasks){
-            Bukkit.getScheduler().cancelTask(tasks);
-        }
-        tasks.clear();
         vanished.clear();
         sendMessage("&cDisabled &f"+this.getName()+ " " +this.getDescription().getVersion());
     }

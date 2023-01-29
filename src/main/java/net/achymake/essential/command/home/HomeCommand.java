@@ -1,23 +1,17 @@
 package net.achymake.essential.command.home;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.files.Config;
 import net.achymake.essential.files.PlayerConfig;
-import net.achymake.essential.settings.Economy;
+import net.achymake.essential.api.EconomyProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,25 +23,21 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0){
                 Player player = (Player) sender;
                 String homeName = "home";
-                if (hasHomes(player)){
-                    if (homeExist(player,homeName)){
-                        getHome(player,homeName).getChunk().load();
-                        player.teleport(getHome(player,homeName));
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+homeName));
-                    }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',homeName+"&c does not exist"));
-                    }
+                if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).contains(homeName)){
+                    getHome(player,homeName).getChunk().load();
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+homeName));
+                    player.teleport(getHome(player,homeName));
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou havent set any homes"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',homeName+"&c does not exist"));
                 }
             } else if (args.length == 1) {
                 Player player = (Player) sender;
-                if (args[0].equalsIgnoreCase("buy")){
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home costs &a"+ Economy.getFormat(Config.get().getDouble("homes.cost"))));
-                } else if (args[0].equalsIgnoreCase("bed")) {
+                String homeName = args[0];
+                if (homeName.equalsIgnoreCase("buy")){
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home costs &a"+ EconomyProvider.getFormat(Config.get().getDouble("homes.cost"))));
+                } else if (homeName.equalsIgnoreCase("bed")) {
                     if (player.getBedSpawnLocation() != null){
                         if (player.hasPermission("essential.home.bed")){
-                            setLastLocation(player);
                             Location location = player.getBedSpawnLocation();
                             location.setPitch(player.getLocation().getPitch());
                             location.setYaw(player.getLocation().getYaw());
@@ -56,24 +46,23 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+args[0]));
                         }
                     }
-                }else if (PlayerConfig.get(player).getKeys(false).contains("homes")){
-                    if (PlayerConfig.get(player).getKeys(true).contains("homes."+args[0])){
-                        setLastLocation(player);
-                        getHome(player,args[0]).getChunk().load();
-                        player.teleport(getHome(player,args[0]));
-                    }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c does not exist"));
-                    }
+                }else if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).contains(homeName)){
+                    getHome(player,homeName).getChunk().load();
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting &f"+homeName));
+                    player.teleport(getHome(player,homeName));
+                }else{
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',homeName+"&c does not exist"));
                 }
             }else if (args.length == 2) {
                 Player player = (Player) sender;
-                if (args[0].equalsIgnoreCase("buy")) {
+                String homeName = args[0];
+                if (homeName.equalsIgnoreCase("buy")) {
                     int amount = Integer.parseInt(args[1]);
                     if (player.hasPermission("essential.home.buy")){
-                        if (Config.get().getDouble("home.cost") * amount > Economy.getEconomy(player)) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou dont have &a"+Economy.getFormat(Config.get().getDouble("homes.cost"))));
+                        if (Config.get().getDouble("home.cost") * amount > EconomyProvider.getEconomy(player)) {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou dont have &a"+ EconomyProvider.getFormat(Config.get().getDouble("homes.cost"))));
                         } else {
-                            buyHome(player,amount);
+                            PlayerConfig.setInt(player,"max-homes",amount);
                         }
                     }
                 }
@@ -86,18 +75,14 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
         List<String> commands = new ArrayList<>();
         Player player = (Player) sender;
         if (args.length == 1) {
-            if (player.hasPermission("essential.home.bed")){
-                if (player.getBedSpawnLocation() != null){
-                    commands.add("bed");
-                }
+            for (String home : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
+                commands.add(home);
             }
-            if (player.hasPermission("essential.home.buy")){
+            if (sender.hasPermission("essential.home.bed")){
+                commands.add("bed");
+            }
+            if (sender.hasPermission("essential.home.buy")){
                 commands.add("buy");
-            }
-            if (hasHomes(player)){
-                for (String home : getHomeNames(player)){
-                    commands.add(home);
-                }
             }
             return commands;
         } else if (args.length == 2) {
@@ -110,57 +95,13 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
         }
         return commands;
     }
-    private void buyHome(Player player, int amount){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        config.set("max-homes", config.getInt("max-homes") + amount);
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Essential.instance.sendMessage(e.getMessage());
-        }
-        Economy.removeEconomy(player, Config.get().getDouble("home.cost") * amount);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6You bought &f" + amount + "&6 for &c" + Economy.getFormat(Config.get().getDouble("home.cost") * amount)));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6You now have &f" + PlayerConfig.get(player).getInt("max-homes") + "&6 total homes"));
-    }
-    private void setLastLocation(Player player){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        Location location = player.getLocation();
-        config.set("last-location.world",location.getWorld().getName());
-        config.set("last-location.x",location.getX());
-        config.set("last-location.y",location.getY());
-        config.set("last-location.z",location.getZ());
-        config.set("last-location.yaw",location.getYaw());
-        config.set("last-location.pitch",location.getPitch());
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            Essential.instance.sendMessage(e.getMessage());
-        }
-    }
-    private boolean hasHomes(Player player){
-        return PlayerConfig.get(player).getKeys(false).contains("homes");
-    }
-    private boolean homeExist(Player player, String homeName){
-        return PlayerConfig.get(player).getKeys(true).contains("homes."+homeName);
-    }
-    private Location getHome(OfflinePlayer offlinePlayer, String home) {
-        String world = PlayerConfig.get(offlinePlayer).getString("homes."+home+".world");
-        double x = PlayerConfig.get(offlinePlayer).getDouble("homes."+home+".x");
-        double y = PlayerConfig.get(offlinePlayer).getDouble("homes."+home+".y");
-        double z = PlayerConfig.get(offlinePlayer).getDouble("homes."+home+".z");
-        float yaw = PlayerConfig.get(offlinePlayer).getLong("homes."+home+".yaw");
-        float pitch = PlayerConfig.get(offlinePlayer).getLong("homes."+home+".pitch");
-        return new Location(Bukkit.getWorld(world),x,y,z,yaw,pitch);
-    }
-    private List<String> getHomeNames(Player player){
-        List<String> homes = new ArrayList<>();
-        if (hasHomes(player)){
-            for (String homeNames : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
-                homes.add(homeNames);
-            }
-        }
-        return homes;
+    private static Location getHome(Player player, String homeName){
+        String worldName = PlayerConfig.get(player).getString("homes."+homeName+".world");
+        double x = PlayerConfig.get(player).getDouble("homes."+homeName+".x");
+        double y = PlayerConfig.get(player).getDouble("homes."+homeName+".y");
+        double z = PlayerConfig.get(player).getDouble("homes."+homeName+".z");
+        float yaw = PlayerConfig.get(player).getLong("homes."+homeName+".yaw");
+        float pitch = PlayerConfig.get(player).getLong("homes."+homeName+".pitch");
+        return new Location(Bukkit.getWorld(worldName),x,y,z,yaw,pitch);
     }
 }

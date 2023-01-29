@@ -1,6 +1,9 @@
 package net.achymake.essential.files;
 
 import net.achymake.essential.Essential;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -26,5 +29,17 @@ public class LocationConfig {
     }
     public static void reload(){
         config = YamlConfiguration.loadConfiguration(configFile);
+    }
+    public static boolean locationExist(String location){
+        return get().getKeys(false).contains(location);
+    }
+    public static Location getLocation(String location){
+        String worldName = get().getString(location+".world");
+        double x = get().getDouble(location+".x");
+        double y = get().getDouble(location+".y");
+        double z = get().getDouble(location+".z");
+        float yaw = get().getLong(location+".yaw");
+        float pitch = get().getLong(location+".pitch");
+        return new Location(Bukkit.getWorld(worldName),x,y,z,yaw,pitch);
     }
 }

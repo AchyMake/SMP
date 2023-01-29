@@ -1,9 +1,6 @@
 package net.achymake.essential.command.reload;
 
-import net.achymake.essential.Essential;
 import net.achymake.essential.files.Files;
-import net.achymake.essential.tablist.Tablist;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
