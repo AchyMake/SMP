@@ -219,6 +219,9 @@ permissions:
   essential.rules:
     description: message
     default: op
+  essential.skills:
+    description: message
+    default: op
   essential.skull:
     description: message
     default: op
