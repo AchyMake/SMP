@@ -64,9 +64,6 @@ permissions:
   essential.feed.others:
     description: message
     default: op
-  essential.feed.exempt:
-    description: message
-    default: op
   essential.fly:
     description: message
     default: op
@@ -117,6 +114,9 @@ permissions:
   essential.heal:
     description: message
     default: op
+  essential.heal.others:
+    description: message
+    default: op
   essential.help:
     description: message
     default: op
@@ -160,6 +160,9 @@ permissions:
     description: message
     default: op
   essential.setjail:
+    description: message
+    default: op
+  essential.join-message:
     description: message
     default: op
   essential.kick:
@@ -346,9 +349,11 @@ commands:
   homes:
     description: message
     permission: essential.homes
-  info:
+  information:
     description: message
     permission: essential.info
+    aliases:
+      - info
   inventory:
     description: message
     permission: essential.inventory

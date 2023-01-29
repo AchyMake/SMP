@@ -81,7 +81,7 @@ public class Commands {
         plugin.getCommand("home").setExecutor(new HomeCommand());
         plugin.getCommand("sethome").setExecutor(new SethomeCommand());
         plugin.getCommand("homes").setExecutor(new HomesCommand());
-        plugin.getCommand("info").setExecutor(new InfoCommand());
+        plugin.getCommand("information").setExecutor(new InfoCommand());
         plugin.getCommand("inventory").setExecutor(new InventoryCommand());
         plugin.getCommand("jail").setExecutor(new JailCommand());
         plugin.getCommand("setjail").setExecutor(new SetjailCommand());

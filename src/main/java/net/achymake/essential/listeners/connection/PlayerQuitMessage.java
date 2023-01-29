@@ -2,6 +2,7 @@ package net.achymake.essential.listeners.connection;
 
 import net.achymake.essential.Essential;
 import net.achymake.essential.files.Config;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -26,5 +27,6 @@ public class PlayerQuitMessage implements Listener {
                 event.setQuitMessage(null);
             }
         }
+        PlayerConfig.setLocation(event.getPlayer(),"quit-location");
     }
 }
