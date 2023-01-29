@@ -3,7 +3,6 @@ package net.achymake.essential.files;
 import net.achymake.essential.Essential;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -51,6 +50,6 @@ public class LocationConfig {
         double z = get().getDouble(location+".z");
         float yaw = get().getLong(location+".yaw");
         float pitch = get().getLong(location+".pitch");
-        return new Location(Bukkit.getWorld(worldName),x,y,z,yaw,pitch);
+        return new Location(Bukkit.getServer().getWorld(worldName),x,y,z,yaw,pitch);
     }
 }

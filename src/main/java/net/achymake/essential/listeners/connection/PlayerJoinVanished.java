@@ -17,11 +17,7 @@ public class PlayerJoinVanished implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoinedVanished (PlayerJoinEvent event){
         if (!PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
-        joinedVanished(event.getPlayer());
-        event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You joined back vanished"));
-        event.setJoinMessage(null);
-    }
-    private void joinedVanished(Player player){
+        Player player = event.getPlayer();
         for (Player players : player.getServer().getOnlinePlayers()){
             players.hidePlayer(Essential.instance,player);
         }
@@ -36,5 +32,7 @@ public class PlayerJoinVanished implements Listener {
             player.showPlayer(Essential.instance,vanishPlayers);
             vanishPlayers.showPlayer(Essential.instance,player);
         }
+        event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You joined back vanished"));
+        event.setJoinMessage(null);
     }
 }

@@ -18,6 +18,7 @@ public class PlayerQuitMessage implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoinNotifyUpdate (PlayerQuitEvent event){
+        if (PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
         if (Config.get().getBoolean("join-message.enable")){
             event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(Config.get().getString("join-message.quit"),event.getPlayer().getName())));
         }else{

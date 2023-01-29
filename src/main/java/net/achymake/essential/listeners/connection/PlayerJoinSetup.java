@@ -20,26 +20,24 @@ public class PlayerJoinSetup implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoinSetup (PlayerJoinEvent event){
-        if (PlayerConfig.get(event.getPlayer()).getBoolean("new")){
-            setupPlayer(event.getPlayer());
+        Player player = event.getPlayer();
+        if (PlayerConfig.get(player).getBoolean("new")){
+            if (LocationConfig.locationExist("spawn")){
+                LocationConfig.getLocation("spawn").getChunk().load();
+                player.teleport(LocationConfig.getLocation("spawn"));
+                for (Player players : player.getServer().getOnlinePlayers()){
+                    for (String welcome : MotdConfig.get().getStringList("welcome")){
+                        players.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(welcome,player.getName())));
+                    }
+                }
+            }else{
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"Spawn &chas not been set"));
+            }
+            PlayerConfig.toggle(player,"new");
         }else{
             for (String welcomeBack : MotdConfig.get().getStringList("welcome-back")){
-                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(welcomeBack,event.getPlayer().getName())));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(welcomeBack,event.getPlayer().getName())));
             }
         }
-    }
-    private void setupPlayer(Player player){
-        if (LocationConfig.locationExist("spawn")){
-            LocationConfig.getLocation("spawn").getChunk().load();
-            player.teleport(LocationConfig.getLocation("spawn"));
-            for (Player players : player.getServer().getOnlinePlayers()){
-                for (String welcome : MotdConfig.get().getStringList("welcome")){
-                    players.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(welcome,player.getName())));
-                }
-            }
-        }else{
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"Spawn &chas not been set"));
-        }
-        PlayerConfig.toggle(player,"new");
     }
 }

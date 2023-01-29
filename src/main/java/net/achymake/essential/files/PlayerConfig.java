@@ -35,8 +35,7 @@ public class PlayerConfig {
         if (!file.exists()){
             configuration.set("new",true);
             configuration.set("name",offlinePlayer.getName());
-            configuration.set("account",0.0);
-            configuration.set("group","default");
+            configuration.set("account",Config.get().getDouble("economy.starting-balance"));
             configuration.set("max-homes",1);
             configuration.set("pvp",true);
             configuration.createSection("homes");
