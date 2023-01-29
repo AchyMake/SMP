@@ -1,5 +1,6 @@
 package net.achymake.essential.command.respond;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +24,7 @@ public class RespondCommand implements CommandExecutor, TabCompleter {
                 if (PlayerConfig.get(player).getKeys(false).contains("last-whisper")){
                     Player target = player.getServer().getPlayer(UUID.fromString(PlayerConfig.get(player).getString("last-whisper")));
                     if (target == null){
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&fUnknown&c is offline"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-null"),player.getServer().getOfflinePlayer(UUID.fromString(PlayerConfig.get(player).getString("last-whisper"))).getName())));
                     }else{
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String words : args){

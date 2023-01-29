@@ -21,13 +21,15 @@ public class SkullCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player){
             if (args.length == 1) {
                 Player player = (Player) sender;
-                OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-                ItemStack skullItem = new ItemStack(Material.PLAYER_HEAD);
-                SkullMeta skullMeta = (SkullMeta) skullItem.getItemMeta();
-                skullMeta.setOwningPlayer(target);
-                skullItem.setItemMeta(skullMeta);
-                player.getInventory().addItem(skullItem);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Gave skull of &f"+target.getName()));
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
+                if (offlinePlayer != null){
+                    ItemStack skullItem = new ItemStack(Material.PLAYER_HEAD);
+                    SkullMeta skullMeta = (SkullMeta) skullItem.getItemMeta();
+                    skullMeta.setOwningPlayer(offlinePlayer);
+                    skullItem.setItemMeta(skullMeta);
+                    player.getInventory().addItem(skullItem);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Gave skull of &f"+offlinePlayer.getName()));
+                }
             }
         }
         return true;

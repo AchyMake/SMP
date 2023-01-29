@@ -12,6 +12,15 @@ public class MessageConfig {
     public static FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
     public static void setup(){
         if (!configFile.exists()){
+            get().addDefault("command.announcement","&6[&eServer&6] {0}");
+            get().addDefault("command.anvil","&6Opened&f anvil");
+            get().addDefault("command.back","&6Teleporting&f back");
+            get().addDefault("command.back-death","&6Teleporting&f death location");
+            get().addDefault("command.back-death-removal","&6Removed death location");
+            get().addDefault("command.balance","&6Balance: {0}");
+            get().addDefault("command.balance-others","{0}&6 balance: {1}");
+            get().addDefault("command.error-target-offline","{0}&c is offline");
+            get().addDefault("command.error-target-null","{0}&c has never joined");
             get().options().copyDefaults(true);
             save();
         }

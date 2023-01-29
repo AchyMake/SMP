@@ -1,5 +1,6 @@
 package net.achymake.essential.command.pay;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import net.achymake.essential.api.EconomyProvider;
 import org.bukkit.ChatColor;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class PayCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have enough"));
                     }
                 }else{
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-null"),offlinePlayer.getName())));
                 }
             }
         }

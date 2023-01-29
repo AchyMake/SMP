@@ -1,5 +1,6 @@
 package net.achymake.essential.command.gamemode;
 
+import net.achymake.essential.files.MessageConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -8,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class GMSCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("essential.gamemode.others")){
                     Player target = player.getServer().getPlayerExact(args[0]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                     }else if (target.hasPermission("essential.gamemode.exempt")){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to change gamemode of &f"+target.getName()));
                     }else{

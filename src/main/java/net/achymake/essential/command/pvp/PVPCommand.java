@@ -1,5 +1,6 @@
 package net.achymake.essential.command.pvp;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -36,7 +37,7 @@ public class PVPCommand implements CommandExecutor, TabCompleter {
                         }
                         sendMessageTarget(player,target);
                     }else if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                     }else if (target.hasPermission("essential.pvp.exempt")){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to change pvp of &f"+target.getName()));
                     }else{

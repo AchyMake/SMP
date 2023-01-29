@@ -1,11 +1,14 @@
 package net.achymake.essential.command.eco.sub;
 
 import net.achymake.essential.command.eco.EcoSubCommand;
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import net.achymake.essential.api.EconomyProvider;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import java.text.MessageFormat;
 
 public class Set extends EcoSubCommand {
     @Override
@@ -33,7 +36,7 @@ public class Set extends EcoSubCommand {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6You added &a" + EconomyProvider.getFormat(value) + "&6 to &f" + offlinePlayer.getName()));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', offlinePlayer.getName() + "&6 has now &a" + EconomyProvider.getFormat(EconomyProvider.getEconomy(offlinePlayer))));
             }else{
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-null"),offlinePlayer.getName())));
             }
         }
     }

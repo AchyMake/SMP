@@ -1,5 +1,6 @@
 package net.achymake.essential.command.back;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,18 +22,18 @@ public class BackCommand implements CommandExecutor, TabCompleter {
             if (player.hasPermission("essential.back.death")) {
                 if (hasDeathLocation(player)){
                     getDeathLocation(player).getChunk().load();
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to&f death Location"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command.back-death")));
                     player.teleport(getDeathLocation(player));
                     removeDeathLocation(player);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Death location removed"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command.back-death-removal")));
                 } else {
                     getLastLocation(player).getChunk().load();
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to&f back"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command.back")));
                     player.teleport(getLastLocation(player));
                 }
             }else{
                 getLastLocation(player).getChunk().load();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to&f back"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command.back")));
                 player.teleport(getLastLocation(player));
             }
         }

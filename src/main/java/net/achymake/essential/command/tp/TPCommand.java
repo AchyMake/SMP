@@ -1,5 +1,6 @@
 package net.achymake.essential.command.tp;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class TPCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 Player target = Bukkit.getPlayer(args[0]);
                 if (target == null){
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                 }else{
                     PlayerConfig.setLocation(player,"last-location");
                     player.teleport(target.getLocation());

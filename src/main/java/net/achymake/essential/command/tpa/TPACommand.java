@@ -1,6 +1,7 @@
 package net.achymake.essential.command.tpa;
 
 import net.achymake.essential.Essential;
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class TPACommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 Player target = player.getServer().getPlayerExact(args[0]);
                 if (target == null){
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                 }else if (target == player){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou cant send tpa request to your self"));
                 } else if (PlayerConfig.get(player).getKeys(false).contains("tpa-request-sent")){

@@ -1,6 +1,7 @@
 package net.achymake.essential.command.info;
 
 import net.achymake.essential.api.EconomyProvider;
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class InfoCommand implements CommandExecutor, TabCompleter {
                     }
                 }
             }else{
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',offlinePlayer.getName()+"&c has never joined"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-null"),offlinePlayer.getName())));
             }
 
         }

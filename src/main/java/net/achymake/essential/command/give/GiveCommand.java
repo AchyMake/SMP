@@ -1,5 +1,6 @@
 package net.achymake.essential.command.give;
 
+import net.achymake.essential.files.MessageConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -9,6 +10,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class GiveCommand implements CommandExecutor, TabCompleter {
                 }else{
                     Player target = player.getServer().getPlayerExact(args[2]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                     }else{
                         target.getInventory().addItem(itemStack);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You gave &f"+target.getName()+" "+itemStack.getAmount()+" "+itemStack.getType().toString().toLowerCase()));

@@ -1,5 +1,6 @@
 package net.achymake.essential.command.kick;
 
+import net.achymake.essential.files.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -8,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class KickCommand implements CommandExecutor, TabCompleter {
         } else if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
             }else if (target.hasPermission("essential.kick.exempt")){
                 player.kickPlayer(ChatColor.translateAlternateColorCodes('&',target.getName()+"&6 has the reverse card!"));
             }else{

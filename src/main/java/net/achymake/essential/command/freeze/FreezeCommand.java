@@ -1,13 +1,16 @@
 package net.achymake.essential.command.freeze;
 
+import net.achymake.essential.files.MessageConfig;
 import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +24,17 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
                 if (target == player){
                     toggleFreeze(player,target);
                 }else if (target == null){
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                 }else{
-                    if (target.hasPermission("essential.freeze.exempt")){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to freeze &f"+target.getName()));
+                    OfflinePlayer offlinePlayer = player.getServer().getOfflinePlayer(args[0]);
+                    if (PlayerConfig.exist(offlinePlayer)){
+                        if (target.hasPermission("essential.freeze.exempt")){
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to freeze &f"+target.getName()));
+                        }else{
+                            toggleFreeze(player,target);
+                        }
                     }else{
-                        toggleFreeze(player,target);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-null"),offlinePlayer.getName())));
                     }
                 }
             }

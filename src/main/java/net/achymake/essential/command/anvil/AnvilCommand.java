@@ -1,5 +1,7 @@
 package net.achymake.essential.command.anvil;
 
+import net.achymake.essential.files.MessageConfig;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class AnvilCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 Inventory inventory = player.getServer().createInventory(player, InventoryType.ANVIL);
                 player.openInventory(inventory);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command.anvil")));
             }
         }
         return true;

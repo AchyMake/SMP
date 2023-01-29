@@ -29,11 +29,6 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size() > 0){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Homes:"));
-                    if (player.hasPermission("homes.bed")){
-                        if (player.getBedSpawnLocation() != null){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f bed"));
-                        }
-                    }
                     for (String listedHomes : PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false)){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+listedHomes));
                     }

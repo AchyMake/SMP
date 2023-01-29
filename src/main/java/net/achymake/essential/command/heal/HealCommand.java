@@ -1,6 +1,7 @@
 package net.achymake.essential.command.heal;
 
 import net.achymake.essential.files.Config;
+import net.achymake.essential.files.MessageConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +50,7 @@ public class HealCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("essential.heal.others")){
                     Player target = player.getServer().getPlayerExact(args[0]);
                     if (target == null){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is offline"));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command.error-target-offline"),args[0])));
                     }else{
                         target.setHealth(target.getMaxHealth());
                         target.setFoodLevel(20);

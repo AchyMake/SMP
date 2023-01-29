@@ -24,6 +24,11 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                         players.showPlayer(Essential.instance,player);
                     }
                     Essential.vanished.remove(player);
+                    player.setCollidable(true);
+                    player.setInvulnerable(false);
+                    player.setCanPickupItems(true);
+                    player.setSleepingIgnored(false);
+                    player.setSilent(false);
                     PlayerConfig.toggle(player,"vanished");
                     for (Player vanishedPlayers : Essential.vanished){
                         player.hidePlayer(Essential.instance,vanishedPlayers);
@@ -34,6 +39,12 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
                         players.hidePlayer(Essential.instance,player);
                     }
                     Essential.vanished.add(player);
+                    player.setAllowFlight(true);
+                    player.setCollidable(false);
+                    player.setInvulnerable(true);
+                    player.setCanPickupItems(false);
+                    player.setSleepingIgnored(true);
+                    player.setSilent(true);
                     PlayerConfig.toggle(player,"vanished");
                     for (Player vanishedPlayers : Essential.vanished){
                         vanishedPlayers.showPlayer(Essential.instance,player);
