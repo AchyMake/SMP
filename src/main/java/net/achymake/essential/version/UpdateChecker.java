@@ -37,7 +37,7 @@ public class UpdateChecker {
     }
     public static void getUpdate(Essential plugin){
         if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, 107261)).getVersion((latest) -> {
+            (new UpdateChecker(plugin, 105940)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     plugin.sendMessage("You are using the latest version");
                 } else {
@@ -49,7 +49,7 @@ public class UpdateChecker {
     }
     public static void sendMessage(Player player){
         if (Essential.instance.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(Essential.instance, 107261)).getVersion((latest) -> {
+            (new UpdateChecker(Essential.instance, 105940)).getVersion((latest) -> {
                 if (!Essential.instance.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6"+Essential.instance.getName()+" Update:"));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6new release: &f" + latest));
