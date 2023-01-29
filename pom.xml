@@ -6,7 +6,7 @@
 
     <groupId>net.achymake</groupId>
     <artifactId>Essential</artifactId>
-    <version>1.10.0</version>
+    <version>1.09.75-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Essential</name>

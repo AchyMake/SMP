@@ -2,12 +2,11 @@ name: Essential
 version: '${project.version}'
 main: net.achymake.essential.Essential
 api-version: 1.13
-prefix: Essential
+prefix: '${project.name}'
 load: STARTUP
-softdepend: [ Vault ]
-depend: [ PlaceholderAPI, LuckPerms ]
+depend: [ Vault, PlaceholderAPI, LuckPerms ]
 authors: [ AchyMake ]
-description: essentials stuff
+description: '${project.description}'
 website: https://www.spigotmc.org/resources/authors/achy.589038/
 permissions:
   essential.announcement:
