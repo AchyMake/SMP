@@ -5,7 +5,6 @@ import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,10 +20,10 @@ public class JailCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             if (args.length == 1){
                 Player player = (Player) sender;
-                if (jailExist()) {
+                if (LocationConfig.locationExist("jail")) {
                     Player target = sender.getServer().getPlayerExact(args[0]);
                     if (target == player){
-                        if (isJailed(target)){
+                        if (PlayerConfig.get(target).getBoolean("jailed")){
                             toggleJail(target);
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You got free"));
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"You freed "+target.getName()));
@@ -38,7 +37,7 @@ public class JailCommand implements CommandExecutor, TabCompleter {
                     }else if (target.hasPermission("essential.jail.exempt")){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed to jail &f"+target.getName()));
                     }else{
-                        if (isJailed(target)){
+                        if (PlayerConfig.get(target).getBoolean("jailed")){
                             toggleJail(target);
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou just got jailed"));
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"You just jailed "+target.getName()));
@@ -66,25 +65,8 @@ public class JailCommand implements CommandExecutor, TabCompleter {
         }
         return commands;
     }
-    private boolean jailExist(){
-        return LocationConfig.get().getKeys(false).contains("jail");
-    }
-    private Location getJail(){
-        String worldName = LocationConfig.get().getString("jail.world");
-        World world = Bukkit.getWorld(worldName);
-        double x = LocationConfig.get().getDouble("jail.x");
-        double y = LocationConfig.get().getDouble("jail.y");
-        double z = LocationConfig.get().getDouble("jail.z");
-        float yaw = LocationConfig.get().getLong("jail.yaw");
-        float pitch = LocationConfig.get().getLong("jail.pitch");
-        return new Location(world,x,y,z,yaw,pitch);
-    }
-    private boolean isJailed(Player player){
-        return PlayerConfig.get(player).getBoolean("jailed");
-    }
     private void toggleJail(Player player){
-        Location location = player.getLocation();
-        if (isJailed(player)){
+        if (PlayerConfig.get(player).getBoolean("jailed")){
             PlayerConfig.toggle(player,"jailed");
             String worldName = PlayerConfig.get(player).getString("jail.world");
             double x = PlayerConfig.get(player).getDouble("jail.x");
@@ -98,14 +80,9 @@ public class JailCommand implements CommandExecutor, TabCompleter {
             PlayerConfig.setString(player,"jail",null);
         }else{
             PlayerConfig.toggle(player,"jailed");
-            PlayerConfig.setString(player,"jail.world",location.getWorld().getName());
-            PlayerConfig.setDouble(player,"jail.x",location.getX());
-            PlayerConfig.setDouble(player,"jail.y",location.getY());
-            PlayerConfig.setDouble(player,"jail.z",location.getZ());
-            PlayerConfig.setFloat(player,"jail.yaw",location.getYaw());
-            PlayerConfig.setFloat(player,"jail.yaw",location.getPitch());
-            getJail().getChunk().load();
-            player.teleport(getJail());
+            PlayerConfig.setLocation(player,"jail");
+            LocationConfig.getLocation("jail").getChunk().load();
+            player.teleport(LocationConfig.getLocation("jail"));
         }
     }
 }

@@ -27,3 +27,20 @@ commands:
     - /about
     - /version
     - /icanhasbukkit
+notifications:
+  # Notification Settings
+  # {0} Player, {1} Material
+  # {2} World, {3} X, {4} Y, {5} Z
+  message:
+    - '&cDetected: &f{0}'
+    - '&cMaterial: &f{1}'
+    - '&cLocation:'
+    - '&cWorld:&f {2} &cX: &f{3} &cY: &f{4} &cZ: &f{5}'
+  bucket-place:
+    - LAVA_BUCKET
+  block-place:
+    - TNT
+  block-break:
+    - DIAMOND_ORE
+    - EMERALD_ORE
+    - ANCIENT_DEBRIS

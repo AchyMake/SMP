@@ -2,7 +2,6 @@ package net.achymake.essential.command.pay;
 
 import net.achymake.essential.files.PlayerConfig;
 import net.achymake.essential.api.EconomyProvider;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -28,7 +27,7 @@ public class PayCommand implements CommandExecutor, TabCompleter {
                         EconomyProvider.removeEconomy(player, Double.valueOf(args[1]));
                         if (offlinePlayer.isOnline()){
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
-                            Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
+                            player.getServer().getPlayerExact(args[0]).sendMessage(ChatColor.translateAlternateColorCodes('&',player.getName()+"&6 paid you &a"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
                         }else{
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You paid &f"+offlinePlayer.getName()+" &c"+ EconomyProvider.getFormat(Double.valueOf(args[1]))));
                         }
@@ -46,7 +45,7 @@ public class PayCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            for (Player players : Bukkit.getOnlinePlayers()){
+            for (Player players : sender.getServer().getOnlinePlayers()){
                 commands.add(players.getName());
             }
             return commands;

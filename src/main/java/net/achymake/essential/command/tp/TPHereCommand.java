@@ -1,5 +1,6 @@
 package net.achymake.essential.command.tp;
 
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,6 +22,7 @@ public class TPHereCommand implements CommandExecutor, TabCompleter {
                 if (target == null){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',args[0]+"&c is either offline or has never joined"));
                 }else{
+                    PlayerConfig.setLocation(target,"last-location");
                     target.teleport(player.getLocation());
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You teleported &f"+target.getName()+"&6 to you"));
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting to &f"+player.getName()));

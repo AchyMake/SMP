@@ -2,7 +2,6 @@ package net.achymake.essential.command.warp;
 
 import net.achymake.essential.files.LocationConfig;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,11 +25,11 @@ public class SetwarpCommand implements CommandExecutor, TabCompleter {
                 }else if (warp.equalsIgnoreCase("jail")){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have to type&f /setjail&c instead"));
                 }else{
-                    if (warpExist(args[0])){
-                        setWarp(player,args[0]);
+                    if (LocationConfig.locationExist(warp)){
+                        LocationConfig.setLocation(player,warp);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format("&6Warp &f{0}&6 has been relocated",warp)));
-                    }else{
-                        setWarp(player,args[0]);
+                    }else {
+                        LocationConfig.setLocation(player,warp);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageFormat.format("&6Warp &f{0}&6 has been created",warp)));
                     }
                 }
@@ -54,18 +53,5 @@ public class SetwarpCommand implements CommandExecutor, TabCompleter {
             return commands;
         }
         return commands;
-    }
-    private boolean warpExist(String warpName){
-        return LocationConfig.get().getKeys(false).contains(warpName);
-    }
-    private void setWarp(Player player, String warpName){
-        Location location = player.getLocation();
-        LocationConfig.get().set(warpName+".world",location.getWorld().getName());
-        LocationConfig.get().set(warpName+".x",location.getX());
-        LocationConfig.get().set(warpName+".y",location.getY());
-        LocationConfig.get().set(warpName+".z",location.getZ());
-        LocationConfig.get().set(warpName+".yaw",location.getYaw());
-        LocationConfig.get().set(warpName+".pitch",location.getPitch());
-        LocationConfig.save();
     }
 }

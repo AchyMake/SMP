@@ -20,7 +20,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 String homeName = "home";
                 if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                    PlayerConfig.setHome(player,homeName);
+                    PlayerConfig.setLocation(player,"homes."+homeName);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
                 }else{
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have reach your limit"));
@@ -34,7 +34,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou cant set home for &f"+homeName));
                 }else{
                     if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
-                        PlayerConfig.setHome(player,homeName);
+                        PlayerConfig.setLocation(player,"homes."+homeName);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
                     }else{
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou have reach your limit"));

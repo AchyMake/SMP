@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,16 @@ public class LocationConfig {
     }
     public static boolean locationExist(String location){
         return get().getKeys(false).contains(location);
+    }
+    public static void setLocation(Player player, String locationName){
+        Location location = player.getLocation();
+        LocationConfig.get().set(locationName+".world",location.getWorld().getName());
+        LocationConfig.get().set(locationName+".x",location.getX());
+        LocationConfig.get().set(locationName+".y",location.getY());
+        LocationConfig.get().set(locationName+".z",location.getZ());
+        LocationConfig.get().set(locationName+".yaw",location.getYaw());
+        LocationConfig.get().set(locationName+".pitch",location.getPitch());
+        LocationConfig.save();
     }
     public static Location getLocation(String location){
         String worldName = get().getString(location+".world");

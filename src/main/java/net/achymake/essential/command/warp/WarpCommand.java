@@ -1,10 +1,8 @@
 package net.achymake.essential.command.warp;
 
 import net.achymake.essential.files.LocationConfig;
-import org.bukkit.Bukkit;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,13 +19,14 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1){
                 Player player = (Player) sender;
                 String warpName = args[0];
-                if (warpExist(warpName)){
+                if (LocationConfig.locationExist(warpName)){
                     if (warpName.equalsIgnoreCase("jail")){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',warpName+"&c does not exist"));
                     }else{
-                        getWarp(warpName).getChunk().load();
-                        player.teleport(getWarp(warpName));
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Teleporting to &f"+warpName));
+                        PlayerConfig.setLocation(player,"last-location");
+                        LocationConfig.getLocation(warpName).getChunk().load();
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Teleporting "+warpName));
+                        player.teleport(LocationConfig.getLocation(warpName));
                     }
                 }else{
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',warpName+"&c does not exist"));
@@ -49,18 +48,5 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             return commands;
         }
         return commands;
-    }
-    private boolean warpExist(String warpName){
-        return LocationConfig.get().getKeys(false).contains(warpName);
-    }
-    private Location getWarp(String warpName){
-        String worldName = LocationConfig.get().getString(warpName+".world");
-        World world = Bukkit.getWorld(worldName);
-        double x = LocationConfig.get().getDouble(warpName+".x");
-        double y = LocationConfig.get().getDouble(warpName+".y");
-        double z = LocationConfig.get().getDouble(warpName+".z");
-        float yaw = LocationConfig.get().getLong(warpName+".yaw");
-        float pitch = LocationConfig.get().getLong(warpName+".pitch");
-        return new Location(world,x,y,z,yaw,pitch);
     }
 }

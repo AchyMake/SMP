@@ -131,20 +131,13 @@ public class PlayerConfig {
             Essential.instance.sendMessage(e.getMessage());
         }
     }
-    public static void setHome(Player player, String homeName){
-        File file = new File(Essential.instance.getDataFolder(), "userdata/"+player.getUniqueId()+".yml");
-        FileConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+    public static void setLocation(Player player, String locationName){
         Location location = player.getLocation();
-        configuration.set("homes."+homeName+".world",location.getWorld().getName());
-        configuration.set("homes."+homeName+".x",location.getX());
-        configuration.set("homes."+homeName+".y",location.getY());
-        configuration.set("homes."+homeName+".z",location.getZ());
-        configuration.set("homes."+homeName+".yaw",location.getYaw());
-        configuration.set("homes."+homeName+".pitch",location.getPitch());
-        try {
-            configuration.save(file);
-        } catch (IOException e) {
-            Essential.instance.sendMessage(e.getMessage());
-        }
+        setString(player,locationName+".world",location.getWorld().getName());
+        setDouble(player,locationName+".x",location.getX());
+        setDouble(player,locationName+".y",location.getY());
+        setDouble(player,locationName+".z",location.getZ());
+        setFloat(player,locationName+".yaw",location.getYaw());
+        setFloat(player,locationName+".pitch",location.getPitch());
     }
 }
