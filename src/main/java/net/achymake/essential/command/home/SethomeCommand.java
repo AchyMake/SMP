@@ -19,7 +19,10 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0){
                 Player player = (Player) sender;
                 String homeName = "home";
-                if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
+                if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).contains(homeName)){
+                    PlayerConfig.setLocation(player,"homes."+homeName);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
+                }else if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
                     PlayerConfig.setLocation(player,"homes."+homeName);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
                 }else{
@@ -33,7 +36,10 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 }else if (homeName.equalsIgnoreCase("buy")){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou cant set home for &f"+homeName));
                 }else{
-                    if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
+                    if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).contains(homeName)){
+                        PlayerConfig.setLocation(player,"homes."+homeName);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
+                    }else if (PlayerConfig.get(player).getInt("max-homes") > PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).size()){
                         PlayerConfig.setLocation(player,"homes."+homeName);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 has been set"));
                     }else{

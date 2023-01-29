@@ -18,7 +18,7 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
             if (args.length == 1){
                 Player player = (Player) sender;
                 String homeName = args[0];
-                if (PlayerConfig.get(player).getKeys(false).contains("homes."+homeName)){
+                if (PlayerConfig.get(player).getConfigurationSection("homes").getKeys(false).contains(homeName)){
                     PlayerConfig.setString(player,"homes."+homeName,null);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Home &f"+homeName+"&6 deleted"));
                 }else{
