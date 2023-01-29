@@ -5,7 +5,7 @@ api-version: 1.13
 prefix: Essential
 load: STARTUP
 softdepend: [ Vault ]
-depend: [ PlaceholderAPI ]
+depend: [ PlaceholderAPI, LuckPerms ]
 authors: [ AchyMake ]
 description: essentials stuff
 website: https://www.spigotmc.org/resources/authors/achy.589038/
@@ -102,9 +102,6 @@ permissions:
   essential.give:
     description: message
     default: op
-  essential.group:
-    description: message
-    default: op
   essential.hat:
     description: message
     default: op
@@ -118,6 +115,12 @@ permissions:
     description: message
     default: op
   essential.home:
+    description: message
+    default: op
+  essential.home.bed:
+    description: message
+    default: op
+  essential.home.buy:
     description: message
     default: op
   essential.sethome:
@@ -157,6 +160,12 @@ permissions:
     description: message
     default: op
   essential.kit:
+    description: message
+    default: op
+  essential.kit.starter:
+    description: message
+    default: op
+  essential.kit.food:
     description: message
     default: op
   essential.motd:
@@ -205,9 +214,6 @@ permissions:
     description: message
     default: op
   essential.spawn:
-    description: message
-    default: op
-  essential.spectate:
     description: message
     default: op
   essential.tp:
@@ -310,9 +316,6 @@ commands:
   give:
     description: message
     permission: essential.give
-  group:
-    description: message
-    permission: essential.group
   hat:
     description: message
     permission: essential.hat
@@ -378,6 +381,8 @@ commands:
   respond:
     description: message
     permission: essential.respond
+    aliases:
+      - r
   rtp:
     description: message
     permission: essential.rtp
@@ -393,9 +398,6 @@ commands:
   spawn:
     description: message
     permission: essential.spawn
-  spectate:
-    description: message
-    permission: essential.spectate
   tp:
     description: message
     permission: essential.tp
@@ -432,6 +434,10 @@ commands:
   whisper:
     description: message
     permission: essential.whisper
+    aliases:
+      - tell
+      - msg
+      - message
   workbench:
     description: message
     permission: essential.workbench
