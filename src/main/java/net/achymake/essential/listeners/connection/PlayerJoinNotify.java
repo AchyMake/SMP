@@ -6,14 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoinNotifyUpdate implements Listener {
-    public PlayerJoinNotifyUpdate(Essential plugin){
+public class PlayerJoinNotify implements Listener {
+    public PlayerJoinNotify(Essential plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerJoinNotifyUpdate (PlayerLoginEvent event){
+    public void onPlayerJoinNotifyUpdate (PlayerJoinEvent event){
         if (!event.getPlayer().hasPermission("essential.reload"))return;
         UpdateChecker.sendMessage(event.getPlayer());
     }

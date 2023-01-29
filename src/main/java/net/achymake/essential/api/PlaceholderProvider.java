@@ -2,8 +2,9 @@ package net.achymake.essential.api;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.achymake.essential.Essential;
+import net.achymake.essential.files.PlayerConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlaceholderProvider extends PlaceholderExpansion {
@@ -33,21 +34,15 @@ public class PlaceholderProvider extends PlaceholderExpansion {
     }
     @Override
     public String onPlaceholderRequest(Player player, String params) {
+        if (player == null){
+            return "";
+        }
         if (params.equals("player")) {
-            return player.getName();
-        }
-        if (params.equals("vanished")) {
-            return String.valueOf(Essential.vanished.contains(player));
-        }
-        if (params.equals("online_players")) {
-            return String.valueOf(Bukkit.getServer().getOnlinePlayers().size()-Essential.vanished.size());
-        }
-        return super.onPlaceholderRequest(player, params);
-    }
-    @Override
-    public String onRequest(OfflinePlayer player, String params) {
-        if (params.equals("player")) {
-            return player.getName();
+            if (PlayerConfig.get(player).getKeys(false).contains("custom-name")){
+                return ChatColor.translateAlternateColorCodes('&',PlayerConfig.get(player).getString("custom-name"));
+            }else{
+                return PlayerConfig.get(player).getString("name");
+            }
         }
         if (params.equals("vanished")) {
             return String.valueOf(Essential.vanished.contains(player));

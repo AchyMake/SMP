@@ -17,7 +17,7 @@ public class PlayerInteractJailed implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuitWithTPATask (PlayerInteractEvent event){
-        if (PlayerConfig.get(event.getPlayer()).getBoolean("jailed"))return;
+        if (!PlayerConfig.get(event.getPlayer()).getBoolean("jailed"))return;
         if (event.getClickedBlock() == null)return;
         event.setCancelled(true);
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed")));

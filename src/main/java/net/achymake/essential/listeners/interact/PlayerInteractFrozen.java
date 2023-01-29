@@ -17,7 +17,7 @@ public class PlayerInteractFrozen implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuitWithTPATask (PlayerInteractEvent event){
-        if (PlayerConfig.get(event.getPlayer()).getBoolean("frozen"))return;
+        if (!PlayerConfig.get(event.getPlayer()).getBoolean("frozen"))return;
         if (event.getClickedBlock() == null)return;
         event.setCancelled(true);
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cYou are not allowed")));

@@ -20,8 +20,13 @@ public class PlayerJoinSetup implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoinSetup (PlayerJoinEvent event){
-        if (!PlayerConfig.get(event.getPlayer()).getBoolean("new"))return;
-        setupPlayer(event.getPlayer());
+        if (PlayerConfig.get(event.getPlayer()).getBoolean("new")){
+            setupPlayer(event.getPlayer());
+        }else{
+            for (String welcomeBack : MotdConfig.get().getStringList("welcome-back")){
+                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(welcomeBack,event.getPlayer().getName())));
+            }
+        }
     }
     private void setupPlayer(Player player){
         if (LocationConfig.locationExist("spawn")){

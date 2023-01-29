@@ -14,7 +14,11 @@ import java.util.List;
 public class MotdCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 1){
+        if (args.length == 0){
+            for (String motd : MotdConfig.get().getStringList("motd")){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(motd,sender.getName())));
+            }
+        }else if (args.length == 1){
             if (MotdConfig.get().getKeys(false).contains(args[0])){
                 for (String motd : MotdConfig.get().getStringList(args[0])){
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(motd,sender.getName())));

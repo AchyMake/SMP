@@ -19,6 +19,7 @@ public class PlayerJoinVanished implements Listener {
         if (!PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
         joinedVanished(event.getPlayer());
         event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You joined back vanished"));
+        event.setJoinMessage(null);
     }
     private void joinedVanished(Player player){
         for (Player players : player.getServer().getOnlinePlayers()){

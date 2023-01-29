@@ -59,7 +59,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 if (homeName.equalsIgnoreCase("buy")) {
                     int amount = Integer.parseInt(args[1]);
                     if (player.hasPermission("essential.home.buy")){
-                        if (Config.get().getDouble("home.cost") * amount > EconomyProvider.getEconomy(player)) {
+                        if (Config.get().getDouble("homes.cost") * amount > EconomyProvider.getEconomy(player)) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou dont have &a"+ EconomyProvider.getFormat(Config.get().getDouble("homes.cost"))));
                         } else {
                             PlayerConfig.setInt(player,"max-homes",amount);

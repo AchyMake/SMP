@@ -17,6 +17,7 @@ public class PlayerQuitVanished implements Listener {
     public void onPlayerQuitWithTPATask (PlayerQuitEvent event){
         if (!PlayerConfig.get(event.getPlayer()).getBoolean("vanished"))return;
         quitVanished(event.getPlayer());
+        event.setQuitMessage(null);
     }
     private void quitVanished(Player player){
         Essential.vanished.remove(player);

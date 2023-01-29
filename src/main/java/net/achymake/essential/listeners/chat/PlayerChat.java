@@ -2,6 +2,7 @@ package net.achymake.essential.listeners.chat;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.achymake.essential.Essential;
+import net.milkbowl.vault.economy.AbstractEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,15 +17,27 @@ public class PlayerChat implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChatFormat (AsyncPlayerChatEvent event){
-        event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: ")+event.getMessage());
+        if (event.getPlayer().hasPermission("essential.chatcolor")){
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: "+event.getMessage()));
+        }else{
+            event.setFormat(ChatColor.translateAlternateColorCodes('&', prefix(event.getPlayer()) + name(event.getPlayer()) + suffix(event.getPlayer())+"&r: ")+event.getMessage());
+        }
     }
     private String prefix(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%luckperms_prefix%");
+        if (PlaceholderAPI.isRegistered("luckperms")){
+            return PlaceholderAPI.setPlaceholders(player, "%luckperms_prefix%");
+        }else{
+            return "";
+        }
     }
     private String name(Player player) {
         return PlaceholderAPI.setPlaceholders(player, "%essential_player%");
     }
     private String suffix(Player player) {
-        return PlaceholderAPI.setPlaceholders(player, "%luckperms_suffix%");
+        if (PlaceholderAPI.isRegistered("luckperms")){
+            return PlaceholderAPI.setPlaceholders(player, "%luckperms_suffix%");
+        }else{
+            return "";
+        }
     }
 }

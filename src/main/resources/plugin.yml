@@ -168,6 +168,9 @@ permissions:
   essential.mute.exempt:
     description: message
     default: op
+  essential.nickname:
+    description: message
+    default: op
   essential.pay:
     description: message
     default: op
@@ -355,6 +358,9 @@ commands:
   mute:
     description: message
     permission: essential.mute
+  nickname:
+    description: message
+    permission: essential.nickname
   pay:
     description: message
     permission: essential.pay

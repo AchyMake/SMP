@@ -30,6 +30,7 @@ import net.achymake.essential.command.kick.KickCommand;
 import net.achymake.essential.command.kit.KitCommand;
 import net.achymake.essential.command.motd.MotdCommand;
 import net.achymake.essential.command.mute.MuteCommand;
+import net.achymake.essential.command.nickname.NicknameCommand;
 import net.achymake.essential.command.pay.PayCommand;
 import net.achymake.essential.command.pvp.PVPCommand;
 import net.achymake.essential.command.reload.EssentialCommand;
@@ -89,6 +90,7 @@ public class Commands {
         plugin.getCommand("kit").setExecutor(new KitCommand());
         plugin.getCommand("motd").setExecutor(new MotdCommand());
         plugin.getCommand("mute").setExecutor(new MuteCommand());
+        plugin.getCommand("nickname").setExecutor(new NicknameCommand());
         plugin.getCommand("pay").setExecutor(new PayCommand());
         plugin.getCommand("pvp").setExecutor(new PVPCommand());
         plugin.getCommand("essential").setExecutor(new EssentialCommand());

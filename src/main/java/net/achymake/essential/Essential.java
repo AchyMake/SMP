@@ -1,6 +1,5 @@
 package net.achymake.essential;
 
-import net.achymake.essential.api.LuckPermsSetup;
 import net.achymake.essential.api.PlaceholderSetup;
 import net.achymake.essential.api.VaultSetup;
 import net.achymake.essential.command.Commands;
@@ -24,7 +23,6 @@ public final class Essential extends JavaPlugin {
         saveConfig();
         instance = this;
         VaultSetup.setup(this);
-        LuckPermsSetup.setup(this);
         PlaceholderSetup.setup(this);
         Files.start();
         Events.start(this);
