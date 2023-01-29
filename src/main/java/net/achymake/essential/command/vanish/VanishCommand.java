@@ -20,10 +20,10 @@ public class VanishCommand implements CommandExecutor, TabCompleter {
             if (args.length == 0){
                 Player player = (Player) sender;
                 if (PlayerConfig.get(player).getBoolean("vanished")){
-                    Essential.vanished.add(player);
+                    Essential.vanished.remove(player);
                     PlayerConfig.toggle(player,"vanished");
                 }else{
-                    Essential.vanished.remove(player);
+                    Essential.vanished.add(player);
                     PlayerConfig.toggle(player,"vanished");
                 }
             }else if (args.length == 1){
